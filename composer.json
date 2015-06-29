@@ -21,6 +21,5 @@
     "psr-4": {
       "Vluzrmos\\": "src/Vluzrmos/"
     }
-  },
-  "minimum-stability": "stable"
+  }
 }
