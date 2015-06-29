@@ -1,0 +1,20 @@
+{
+  "name": "vluzrmos/locale-detector",
+  "description": "A Laravel and Lumen Automatic Locale Detector.",
+  "keywords": [
+    "Laravel",
+    "Lumen",
+    "Locale"
+  ],
+  "license": "MIT",
+  "type": "package",
+  "require": {
+    "illuminate/support": "5.0.*|5.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vluzrmos\\": "src/Vluzrmos/"
+    }
+  },
+  "minimum-stability": "stable"
+}
