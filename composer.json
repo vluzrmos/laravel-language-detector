@@ -7,6 +7,12 @@
     "Locale"
   ],
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Vagner do Carmo",
+      "email": "vluzrmos@gmail.com"
+    }
+  ],
   "type": "package",
   "require": {
     "illuminate/support": "5.0.*|5.1.*"
