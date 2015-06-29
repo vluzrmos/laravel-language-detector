@@ -30,6 +30,20 @@ $app->register(Vluzrmos\LocaleDetector\LocaleDetectorServiceProvider::class)
 
 After install & configure it, you have to use the style `lang-locale` or just `lang` on your `resources/lang` dir. The package will try to detect the browser prefered language which matches with your `lang` or `lang-locale`.
 
+example:
+
+```
+├── lang
+│   ├── en
+│   │   ├── messages.php
+│   │   ├── slackin.php
+│   │   └── validation.php
+│   └── pt-br
+│       ├── messages.php
+│       ├── slackin.php
+│       └── validation.php
+```
+
 
 
 
