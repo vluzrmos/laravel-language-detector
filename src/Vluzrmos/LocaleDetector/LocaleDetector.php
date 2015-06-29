@@ -57,17 +57,17 @@ class LocaleDetector
      */
     public function detect($apply = true)
     {
-        $language = array_shift($this->intersectLanguages());
+        $languages = $this->intersectLanguages();
 
-        if (!$language) {
+        if (!$languages) {
             return false;
         }
 
         if ($apply) {
-            $this->translator->setLocale($language);
+            $this->translator->setLocale($languages[0]);
         }
 
-        return $language;
+        return $languages[0];
     }
 
     /**
@@ -77,10 +77,10 @@ class LocaleDetector
      */
     public function intersectLanguages()
     {
-        return array_intersect(
+        return array_values(array_intersect(
             $this->requestLanguages(),
             $this->appLanguages()
-        );
+        ));
     }
     
     /**
