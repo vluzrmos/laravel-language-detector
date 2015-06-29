@@ -26,4 +26,12 @@ $app->register(Vluzrmos\LocaleDetector\LocaleDetectorServiceProvider::class)
 ```
 > ::class notation is optional.
 
+# Usage
+
+After install & configure it, you have to use the style `lang-locale` or just `lang` on your `resources/lang` dir. The package will try to detect the browser prefered language which matches with your `lang` or `lang-locale`.
+
+
+
+
+
 
