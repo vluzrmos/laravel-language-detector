@@ -1,10 +1,12 @@
 {
-  "name": "vluzrmos/locale-detector",
-  "description": "A Laravel and Lumen Automatic Locale Detector.",
+  "name": "vluzrmos/language-detector",
+  "description": "A Laravel and Lumen Automatic Language Detector.",
   "keywords": [
     "Laravel",
     "Lumen",
-    "Locale"
+    "Locale",
+    "Language",
+    "i18n"
   ],
   "license": "MIT",
   "authors": [
@@ -15,7 +17,8 @@
   ],
   "type": "package",
   "require": {
-    "illuminate/support": "5.0.*|5.1.*"
+    "illuminate/support": "5.0.*|5.1.*",
+    "willdurand/negotiation": "1.3.*"
   },
   "autoload": {
     "psr-4": {
