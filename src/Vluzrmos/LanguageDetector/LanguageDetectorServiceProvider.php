@@ -18,9 +18,15 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $config = $this->configFile();
+
         $this->publishes([
-            $this->configFile() => base_path('config/lang-detector.php'),
+            $config => base_path('config/lang-detector.php'),
         ]);
+
+        $this->mergeConfigFrom($config, 'lang-detector');
+
+        $this->registerLanguageDetector();
     }
 
     /**
@@ -40,13 +46,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom($this->configFile(), 'lang-detector');
-
         $this->registerLanguageNegotiator();
-
-        $this->registerLanguageDetector();
-
-        $this->app['language.detector']->detect();
     }
 
     /**
@@ -59,6 +59,8 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         $this->app->singleton('language.negotiator', function () {
             return new LanguageNegotiator();
         });
+
+        $this->app['language.detector']->detect();
     }
 
     /**
