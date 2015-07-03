@@ -32,10 +32,10 @@ class LanguageDetector
     /**
      * Browser Language Detector.
      *
-     * @param Request    $request
-     * @param Translator $translator
-     * @param Negotiator $negotiator
-     * @param array      $langs
+     * @param Request    $request    The request.
+     * @param Translator $translator Translator instance
+     * @param Negotiator $negotiator Negotiator instance
+     * @param array      $langs      array of available languages.
      */
     public function __construct(Request $request, Translator $translator, Negotiator $negotiator, array $langs)
     {
@@ -54,13 +54,15 @@ class LanguageDetector
      */
     public function detect($apply = true)
     {
-        $language = $this->negotiator->getBest(
+        $accept = $this->negotiator->getBest(
             $this->browserLanguages(),
             $this->appLanguages()
         );
 
+        $language = $accept ? $accept->getValue() : null;
+
         if ($apply && $language) {
-            $this->setLocale($language->getValue());
+            $this->setLocale($language);
         }
 
         return $language;
