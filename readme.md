@@ -24,7 +24,7 @@ Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class
 Publish the config file:
 
 ```
-php artisan vendor:publish --provider=Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider
+php artisan vendor:publish
 ```
 
 ## Lumen
