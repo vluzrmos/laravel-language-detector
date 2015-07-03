@@ -59,8 +59,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         $this->app->singleton('language.negotiator', function () {
             return new LanguageNegotiator();
         });
-
-        $this->app['language.detector']->detect();
     }
 
     /**
@@ -78,6 +76,8 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 $this->app['config']->get('lang-detector.languages', ['en'])
             );
         });
+
+        $this->app['language.detector']->detect();
     }
 
     /**
