@@ -1,6 +1,6 @@
 # Laravel And Lumen Language Detector
 
-[![Latest Stable Version](https://poser.pugx.org/vluzrmos/locale-detector/v/stable)](https://packagist.org/packages/vluzrmos/locale-detector) [![Total Downloads](https://poser.pugx.org/vluzrmos/locale-detector/downloads)](https://packagist.org/packages/vluzrmos/locale-detector) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/locale-detector/v/unstable)](https://packagist.org/packages/vluzrmos/locale-detector) [![License](https://poser.pugx.org/vluzrmos/locale-detector/license)](https://packagist.org/packages/vluzrmos/locale-detector)
+[![Latest Stable Version](https://poser.pugx.org/vluzrmos/language-detector/v/stable)](https://packagist.org/packages/vluzrmos/language-detector) [![Total Downloads](https://poser.pugx.org/vluzrmos/language-detector/downloads)](https://packagist.org/packages/vluzrmos/language-detector) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/language-detector/v/unstable)](https://packagist.org/packages/vluzrmos/language-detector) [![License](https://poser.pugx.org/vluzrmos/language-detector/license)](https://packagist.org/packages/vluzrmos/language-detector) [![Build Status](https://travis-ci.org/vluzrmos/laravel-language-detector.svg)](https://travis-ci.org/vluzrmos/laravel-language-detector)
 
 This package provides an easy way to detect and apply the user language based on his browser configuration preferences.
 
