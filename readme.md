@@ -6,7 +6,7 @@ This package provides an easy way to detect and apply the user language based on
 
 # Instalation
 
-`composer require vluzrmos/locale-detector`
+`composer require vluzrmos/language-detector`
 
 # Configuration
 
