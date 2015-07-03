@@ -16,7 +16,7 @@ class LanguageDetectorTest extends AbstractTestCase
     {
         $detector = $this->createInstance();
 
-        $this->setLocale('en');
+        $this->setAppLocale('en');
 
         $this->assertEquals('pt-BR', $detector->detect(false), "The language doesn't matches with 'en'.");
     }
@@ -30,7 +30,7 @@ class LanguageDetectorTest extends AbstractTestCase
 
         $detector->detect();
 
-        $this->assertEquals('pt-BR', $this->getLocale(), "The application language doesn't matches with 'en'.");
+        $this->assertEquals('pt-BR', $this->getAppLocale(), "The application language doesn't matches with 'en'.");
     }
 
     /**
@@ -42,7 +42,7 @@ class LanguageDetectorTest extends AbstractTestCase
 
         $detector->detect();
 
-        $this->assertEquals('pt-BR', $this->getLocale(), "The application language doesn't matches with 'en'.");
+        $this->assertEquals('pt-BR', $this->getAppLocale(), "The application language doesn't matches with 'en'.");
     }
 
     /**
@@ -53,12 +53,12 @@ class LanguageDetectorTest extends AbstractTestCase
         /* UNdetectable LOcale */
         $detector = $this->createInstance('un-LO');
 
-        $locale = $this->getLocale();
+        $locale = $this->getAppLocale();
 
         $detected = $detector->detect(true);
 
         $this->assertEmpty($detected);
 
-        $this->assertEquals($locale, $this->getLocale());
+        $this->assertEquals($locale, $this->getAppLocale());
     }
 }

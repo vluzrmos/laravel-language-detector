@@ -36,7 +36,7 @@ abstract class AbstractTestCase extends Testbench
     /**
      * @param string $locale
      */
-    public function setLocale($locale)
+    public function setAppLocale($locale)
     {
         $this->app['translator']->setLocale($locale);
     }
@@ -44,7 +44,7 @@ abstract class AbstractTestCase extends Testbench
     /**
      * @return string
      */
-    public function getLocale()
+    public function getAppLocale()
     {
         return $this->app['translator']->getLocale();
     }
