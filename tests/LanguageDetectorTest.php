@@ -18,7 +18,7 @@ class LanguageDetectorTest extends AbstractTestCase
 
         $this->setAppLocale('en');
 
-        $this->assertEquals('pt-BR', $detector->detect(false), "The language doesn't matches with 'en'.");
+        $this->assertEquals('pt-BR', $detector->detect(false));
     }
 
     /**
@@ -30,7 +30,7 @@ class LanguageDetectorTest extends AbstractTestCase
 
         $detector->detect();
 
-        $this->assertEquals('pt-BR', $this->getAppLocale(), "The application language doesn't matches with 'en'.");
+        $this->assertEquals('pt-BR', $this->getAppLocale());
     }
 
     /**
@@ -42,7 +42,7 @@ class LanguageDetectorTest extends AbstractTestCase
 
         $detector->detect();
 
-        $this->assertEquals('pt-BR', $this->getAppLocale(), "The application language doesn't matches with 'en'.");
+        $this->assertEquals('pt-BR', $this->getAppLocale());
     }
 
     /**
