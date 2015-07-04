@@ -13,21 +13,24 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
 class LanguageDetector
 {
     /**
-     * Illuminate Request.
-     * @var Request
+     * @var \Illuminate\Http\Request Illuminate (Laravel or Lumen) Request.
      */
     protected $request;
 
     /**
-     * Languages.
-     * @var array
-     */
-    protected $langs;
-
-    /**
-     * @var LanguageNegotiator
+     * @var \Negotiation\LanguageNegotiator LanguageNegotiator instance
      */
     private $negotiator;
+
+    /**
+     * @var Symfony\Component\Translation\TranslatorInterface Illuminate Translator instance
+     */
+    protected $translator;
+
+    /**
+     * @var array Available Languages.
+     */
+    protected $availableLanguages;
 
     /**
      * Browser Language Detector.
@@ -35,14 +38,17 @@ class LanguageDetector
      * @param Request    $request    The request.
      * @param Translator $translator Translator instance
      * @param Negotiator $negotiator Negotiator instance
-     * @param array      $langs      array of available languages.
+     * @param array      $availableLanguages  array of available languages.
      */
-    public function __construct(Request $request, Translator $translator, Negotiator $negotiator, array $langs)
+    public function __construct(Request $request,
+                                Translator $translator,
+                                Negotiator $negotiator,
+                                array $availableLanguages)
     {
-        $this->request = $request;
-        $this->langs = $langs;
+        $this->request    = $request;
         $this->translator = $translator;
         $this->negotiator = $negotiator;
+        $this->availableLanguages = $availableLanguages;
     }
 
     /**
@@ -87,7 +93,7 @@ class LanguageDetector
     {
         $map = [];
 
-        foreach ($this->langs as $key => $value) {
+        foreach ($this->availableLanguages as $key => $value) {
             $map[] = $this->keyOrValue($key, $value);
         }
 
@@ -95,12 +101,10 @@ class LanguageDetector
     }
 
     /**
-     * Return the value or key if key is numeric.
-     *
      * @param string|integer $key
      * @param mixed          $value
      *
-     * @return mixed
+     * @return mixed The value or key if key is numeric.
      */
     public function keyOrValue($key, $value)
     {
@@ -120,7 +124,7 @@ class LanguageDetector
      */
     public function setLocale($locale)
     {
-        $locale = isset($this->langs[$locale]) ? $this->langs[$locale] : $locale;
+        $locale = isset($this->availableLanguages[$locale]) ? $this->availableLanguages[$locale] : $locale;
 
         $this->translator->setLocale($locale);
     }
