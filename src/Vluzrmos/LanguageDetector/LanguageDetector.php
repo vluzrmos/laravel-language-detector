@@ -16,36 +16,30 @@ class LanguageDetector
      * @var \Illuminate\Http\Request Illuminate (Laravel or Lumen) Request.
      */
     protected $request;
-
+    /**
+     * @var \Symfony\Component\Translation\TranslatorInterface Illuminate Translator instance
+     */
+    protected $translator;
+    /**
+     * @var array Available Languages.
+     */
+    protected $availableLanguages;
     /**
      * @var \Negotiation\LanguageNegotiator LanguageNegotiator instance
      */
     private $negotiator;
 
     /**
-     * @var Symfony\Component\Translation\TranslatorInterface Illuminate Translator instance
-     */
-    protected $translator;
-
-    /**
-     * @var array Available Languages.
-     */
-    protected $availableLanguages;
-
-    /**
      * Browser Language Detector.
      *
-     * @param Request    $request    The request.
-     * @param Translator $translator Translator instance
-     * @param Negotiator $negotiator Negotiator instance
-     * @param array      $availableLanguages  array of available languages.
+     * @param Request    $request            The request.
+     * @param Translator $translator         Translator instance
+     * @param Negotiator $negotiator         Negotiator instance
+     * @param array      $availableLanguages array of available languages.
      */
-    public function __construct(Request $request,
-                                Translator $translator,
-                                Negotiator $negotiator,
-                                array $availableLanguages)
+    public function __construct(Request $request, Translator $translator, Negotiator $negotiator, array $availableLanguages)
     {
-        $this->request    = $request;
+        $this->request = $request;
         $this->translator = $translator;
         $this->negotiator = $negotiator;
         $this->availableLanguages = $availableLanguages;

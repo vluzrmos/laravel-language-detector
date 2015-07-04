@@ -5,7 +5,7 @@ namespace Vluzrmos\LanguageDetector;
 use Illuminate\Http\Request;
 use Mockery;
 use Orchestra\Testbench\TestCase as Testbench;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class TestCase
@@ -14,9 +14,9 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
 abstract class AbstractTestCase extends Testbench
 {
     /**
-     * @param string $current Current configured Localed
-     * @param null  $acceptLanguageHeader
-     * @param array $config
+     * @param string $current              Current configured Localed.
+     * @param string $acceptLanguageHeader
+     * @param array  $config
      *
      * @return LanguageDetector
      */
@@ -27,8 +27,12 @@ abstract class AbstractTestCase extends Testbench
             'HTTP_ACCEPT_LANGUAGE' => $acceptLanguageHeader ?: 'pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4',
         ]);
 
-        // create a translator mock
-        $translator = Mockery::mock(Translator::class);
+        /**
+         * Translator Mock.
+         * @var TranslatorInterface|Mockery\Mock $translator
+         */
+        $translator = Mockery::mock('\Symfony\Component\Translation\TranslatorInterface');
+
         $translator->shouldReceive('setLocale')->with($current)->andReturn(true);
         $translator->shouldReceive('getLocale')->andReturn($current);
 
