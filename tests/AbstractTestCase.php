@@ -3,7 +3,7 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Illuminate\Http\Request;
-use Mockery;
+use Negotiation\LanguageNegotiator;
 use Orchestra\Testbench\TestCase as Testbench;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -20,7 +20,7 @@ abstract class AbstractTestCase extends Testbench
      *
      * @return LanguageDetector
      */
-    public function createInstance($current = 'en', $acceptLanguageHeader = null, $config = ['en', 'pt-BR'])
+    public function createInstance($current = 'en', $acceptLanguageHeader = null, $config = ['pt-BR', 'en'])
     {
         /** @var \Illuminate\Http\Request $request */
         $request = Request::create('http://localhost:8000', 'GET', [], [], [], [
@@ -29,17 +29,16 @@ abstract class AbstractTestCase extends Testbench
 
         /**
          * Translator Mock.
-         * @var TranslatorInterface|Mockery\Mock $translator
+         * @var TranslatorInterface
          */
-        $translator = Mockery::mock('\Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->app['translator'];
 
-        $translator->shouldReceive('setLocale')->with($current)->andReturn(true);
-        $translator->shouldReceive('getLocale')->andReturn($current);
-
-        $this->app['translator'] = $translator;
+        $translator->setLocale($current);
 
         /** @var \Negotiation\LanguageNegotiator $negotiator */
-        $negotiator = $this->app['language.negotiator'];
+        $negotiator = new LanguageNegotiator();
+
+        $this->app['language.negotiator'] = $negotiator;
 
         return new LanguageDetector($request, $translator, $negotiator, $config);
     }
@@ -58,14 +57,5 @@ abstract class AbstractTestCase extends Testbench
     public function getAppLocale()
     {
         return $this->app['translator']->getLocale();
-    }
-
-    /**
-     * @param \Illuminate\Foundation\Application $app
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return ['Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider'];
     }
 }

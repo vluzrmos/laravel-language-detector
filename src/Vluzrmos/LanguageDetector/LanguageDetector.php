@@ -50,7 +50,7 @@ class LanguageDetector
      *
      * @param  bool $apply Default true, to apply the detected locale.
      *
-     * @return string|bool Returns the detected locale or false.
+     * @return string|null Returns the detected locale or null.
      */
     public function detect($apply = true)
     {
@@ -59,10 +59,10 @@ class LanguageDetector
             $this->appLanguages()
         );
 
-        $language = $accept ? $accept->getValue() : null;
+        $language = $accept ? $this->getAliasedLocale($accept->getValue()) : null;
 
         if ($apply && $language) {
-            $this->setLocale($language);
+            $this->setRealLocale($language);
         }
 
         return $language;
@@ -79,7 +79,7 @@ class LanguageDetector
     }
 
     /**
-     * Get the languages for the application
+     * Get the languages for the application.
      *
      * @return array
      */
@@ -95,14 +95,16 @@ class LanguageDetector
     }
 
     /**
+     * Get the $value if key is numeric or null, otherwise will return the key.
+     *
      * @param string|integer $key
      * @param mixed          $value
      *
-     * @return mixed The value or key if key is numeric.
+     * @return mixed
      */
     public function keyOrValue($key, $value)
     {
-        if (is_numeric($key)) {
+        if (is_numeric($key) or empty($key)) {
             return $value;
         }
 
@@ -114,12 +116,36 @@ class LanguageDetector
      *
      * @param string $locale
      *
-     * @return void
+     * @return string
      */
     public function setLocale($locale)
     {
-        $locale = isset($this->availableLanguages[$locale]) ? $this->availableLanguages[$locale] : $locale;
+        $locale = $this->getAliasedLocale($locale);
 
+        $this->setRealLocale($locale);
+
+        return $locale;
+    }
+
+    /**
+     * Set a Non-Aliased locale.
+     *
+     * @param string $locale
+     * @return mixed
+     */
+    public function setRealLocale($locale)
+    {
         $this->translator->setLocale($locale);
+    }
+
+    /**
+     * Return the real locale based on available languages.
+     *
+     * @param string $locale
+     * @return mixed
+     */
+    public function getAliasedLocale($locale)
+    {
+        return isset($this->availableLanguages[$locale]) ? $this->availableLanguages[$locale] : $locale;
     }
 }
