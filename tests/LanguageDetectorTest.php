@@ -14,7 +14,7 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldDetectEnLanguage()
     {
-        $detector = $this->createInstance();
+        $detector = $this->createInstance('en');
 
         $this->setAppLocale('en');
 
@@ -26,7 +26,7 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldSeePtBRLanguage()
     {
-        $detector = $this->createInstance();
+        $detector = $this->createInstance('pt-BR');
 
         $detector->detect();
 
@@ -36,9 +36,9 @@ class LanguageDetectorTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testShouldAliasePtToPtBrLanguage()
+    public function testShouldAliasPtToPtBrLanguage()
     {
-        $detector = $this->createInstance('pt', ['pt' => 'pt-BR', 'pt-BR']);
+        $detector = $this->createInstance('pt-BR', 'pt', ['pt' => 'pt-BR', 'pt-BR']);
 
         $detector->detect();
 
@@ -51,7 +51,7 @@ class LanguageDetectorTest extends AbstractTestCase
     public function testShouldNotDetectTheLanguageAndSeeDefault()
     {
         /* UNdetectable LOcale */
-        $detector = $this->createInstance('un-LO');
+        $detector = $this->createInstance('un-LO', 'un-LO');
 
         $locale = $this->getAppLocale();
 
