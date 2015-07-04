@@ -16,7 +16,7 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
      */
     public function testServiceContainer()
     {
-        $this->registerProvider();
+        $this->registerServiceProvider();
 
         $this->assertInstanceOf('Negotiation\LanguageNegotiator', $this->app['language.negotiator']);
 
@@ -26,7 +26,7 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function registerProvider()
+    public function registerServiceProvider()
     {
         $this->app->register('Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider');
     }
@@ -36,7 +36,7 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
      */
     public function testDefaultConfiguration()
     {
-        $this->registerProvider();
+        $this->registerServiceProvider();
 
         $config = $this->app['config']->get('lang-detector.languages', null);
 
@@ -56,7 +56,7 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
 
         $this->assertEquals('fr', $translator->getLocale());
 
-        $this->registerProvider();
+        $this->registerServiceProvider();
 
         $this->assertEquals('en', $translator->getLocale());
     }
