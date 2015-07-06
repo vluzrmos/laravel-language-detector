@@ -131,7 +131,7 @@ class LanguageDetector implements DetectorContract
      */
     public function chooseBestLanguage()
     {
-        $accepted = array_intersect($this->appLanguages(), $this->browserLanguages());
+        $accepted = array_intersect($this->browserLanguages(), $this->appLanguages());
 
         return $accepted ? array_shift($accepted) : null;
     }
