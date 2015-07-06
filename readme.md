@@ -76,7 +76,50 @@ return [
 ];
 ```
 
+If you not want to always detect automatically the language, you just disable that feature on `config/lang-detector.php`:
 
+```php
+return [
+    'autodetect' => false //disabling
+];
+```
+
+And use the contract `Vluzrmos\LanguageDetector\Contracts\LanguageDetector`:
+
+```php
+use Vluzrmos\LanguageDetector\Contracts\LanguageDetector;
+
+YourController extends Controller
+{
+    
+    controllerMethod(LanguageDetector $detector)
+    {
+        $detector->detect(); 
+        
+        // or... just getting the language detected, not applying
+        $language = $detector->detect(false);
+    }
+
+} 
+```
+
+or use the helper:
+
+```php
+app('language.detector')->detect();
+
+// just getting the language detected, not applying
+$language = app('language.detector')->detect(false);
+
+//or 
+
+use Vluzrmos\LanguageDetector\Contracts\LanguageDetector;
+
+$language = app(LanguageDetector::class)->detect();
+
+// just getting the language detected, not applying
+$language = app(LanguageDetector::class)->detect(false);
+```
 
 
 
