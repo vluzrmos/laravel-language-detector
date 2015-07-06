@@ -3,7 +3,6 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Illuminate\Support\ServiceProvider;
-use Negotiation\LanguageNegotiator;
 
 /**
  * Class LanguageDetectorServiceProvider
@@ -46,19 +45,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerLanguageNegotiator();
-    }
-
-    /**
-     * Register the negotiator instance.
-     *
-     * @return void
-     */
-    public function registerLanguageNegotiator()
-    {
-        $this->app->singleton('language.negotiator', function () {
-            return new LanguageNegotiator();
-        });
     }
 
     /**
@@ -72,7 +58,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             return new LanguageDetector(
                 $this->app['request'],
                 $this->app['translator'],
-                $this->app['language.negotiator'],
                 $this->app['config']->get('lang-detector.languages', ['en'])
             );
         });

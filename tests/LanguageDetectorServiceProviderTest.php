@@ -18,8 +18,6 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
     {
         $this->registerServiceProvider();
 
-        $this->assertInstanceOf('Negotiation\LanguageNegotiator', $this->app['language.negotiator']);
-
         $this->assertInstanceOf('Vluzrmos\LanguageDetector\LanguageDetector', $this->app['language.detector']);
     }
 

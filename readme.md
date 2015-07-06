@@ -43,12 +43,12 @@ $app->register(Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class)
 
 # Usage
 
-After install & configure the package, you have to use the style `lang-LOCALE` or just `lang` on your `resources/lang` dir. 
-The package will try to detect the browser prefered language which matches with `lang` or `lang-LOCALE` in `config/lang-detector.php`.
+After install & configure the package, you have to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir. 
+The package will try to detect the browser prefered language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
 
 ```php
 return [
-    'languages' => ['en', 'fr', 'pt'] //...
+    'languages' => ['en', 'fr', 'pt_BR'] //...
 ];
 ```
 example:
@@ -58,7 +58,7 @@ example:
 │   ├── en
 │   │   ├── messages.php
 │   │   └── validation.php
-│   └── pt
+│   └── pt_BR
 │       ├── messages.php
 │       └── validation.php
 ```
@@ -68,7 +68,7 @@ If you are not following that style of languages names, you just configure it on
 ```php
 return [
     'languages' => [
-        'pt-BR' => 'pt_BR', //will detect pt-BR language, and set pt_BR to the application
+        'pt_BR' => 'pt-BR', //will detect pt_BR language, and set pt-BR to the application
         'en', //will detect 'en' language
     ]
 ];

@@ -3,7 +3,6 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Illuminate\Http\Request;
-use Negotiation\LanguageNegotiator;
 use Orchestra\Testbench\TestCase as Testbench;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -35,12 +34,7 @@ abstract class AbstractTestCase extends Testbench
 
         $translator->setLocale($current);
 
-        /** @var \Negotiation\LanguageNegotiator $negotiator */
-        $negotiator = new LanguageNegotiator();
-
-        $this->app['language.negotiator'] = $negotiator;
-
-        return new LanguageDetector($request, $translator, $negotiator, $config);
+        return new LanguageDetector($request, $translator, $config);
     }
 
     /**

@@ -24,24 +24,18 @@ class LanguageDetector
      * @var array Available Languages.
      */
     protected $availableLanguages;
-    /**
-     * @var \Negotiation\LanguageNegotiator LanguageNegotiator instance
-     */
-    private $negotiator;
 
     /**
      * Browser Language Detector.
      *
      * @param Request    $request            The request.
      * @param Translator $translator         Translator instance
-     * @param Negotiator $negotiator         Negotiator instance
      * @param array      $availableLanguages array of available languages.
      */
-    public function __construct(Request $request, Translator $translator, Negotiator $negotiator, array $availableLanguages)
+    public function __construct(Request $request, Translator $translator, array $availableLanguages)
     {
         $this->request = $request;
         $this->translator = $translator;
-        $this->negotiator = $negotiator;
         $this->availableLanguages = $availableLanguages;
     }
 
@@ -54,7 +48,9 @@ class LanguageDetector
      */
     public function detect($apply = true)
     {
-        $language = $this->getAliasedLocale($this->chooseBestLanguage());
+        $accept = $this->chooseBestLanguage();
+
+        $language = $accept ? $this->getAliasedLocale($accept) : null;
 
         if ($apply && $language) {
             $this->setRealLocale($language);

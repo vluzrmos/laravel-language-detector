@@ -122,9 +122,9 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldAliaseTheLocale()
     {
-        $detector = $this->createInstance('pt_BR', 'en', [
+        $detector = $this->createInstance('pt_BR', 'en-US,en', [
             'pt' => 'pt_BR',
-            'en-US' => 'en',
+            'en_US' => 'en',
         ]);
 
         $this->setAppLocale('pt_BR');
@@ -132,7 +132,7 @@ class LanguageDetectorTest extends AbstractTestCase
         $locale = $detector->detect(false);
 
         $this->assertEquals('en', $locale);
-        $this->assertEquals('en', $detector->getAliasedLocale('en-US'));
+        $this->assertEquals('en', $detector->getAliasedLocale('en_US'));
         $this->assertEquals('en', $detector->getAliasedLocale('en'));
     }
 
