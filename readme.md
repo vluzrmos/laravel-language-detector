@@ -70,7 +70,8 @@ If you are not following that style of languages names, you just configure it on
 ```php
 return [
     'languages' => [
-        'pt_BR' => 'pt-BR', //will detect pt_BR language, and set pt-BR to the application
+        'pt_BR' => 'pt-BR', //will detect pt_BR language, and set pt-BR to the application,
+        'pt' => 'pt-BR', //aliasing, will detect pt and set pt-BR to the application 
         'en', //will detect 'en' language
     ]
 ];

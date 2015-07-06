@@ -120,6 +120,36 @@ class LanguageDetectorTest extends AbstractTestCase
     /**
      * @return void
      */
+    public function testShouldChooseBrowserLanguage()
+    {
+        $detector = $this->createInstance('fr', 'en-US,en;q=0.8,pt-BR;q=0.6,pt;q=0.4', ['pt_BR', 'en']);
+
+        $this->assertEquals('en', $detector->detect(false));
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldChooseBrowserLanguage2()
+    {
+        $detector = $this->createInstance('fr', 'en-US,en;q=0.8,pt-BR;q=0.6,pt;q=0.4', ['pt_BR', 'en_US']);
+
+        $this->assertEquals('en_US', $detector->detect(false));
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldChooseBrowserLanguage3()
+    {
+        $detector = $this->createInstance('fr', 'pt;q=0.8,en-US;q=0.6,en;q=0.4', ['pt' => 'pt_BR', 'en_US']);
+
+        $this->assertEquals('pt_BR', $detector->detect(false));
+    }
+
+    /**
+     * @return void
+     */
     public function testShouldAliaseTheLocale()
     {
         $detector = $this->createInstance('pt_BR', 'en-US,en', [
