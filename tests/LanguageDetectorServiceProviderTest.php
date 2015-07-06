@@ -18,7 +18,15 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
     {
         $this->registerServiceProvider();
 
-        $this->assertInstanceOf('Vluzrmos\LanguageDetector\LanguageDetector', $this->app['language.detector']);
+        $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetector';
+        $implementation = 'Vluzrmos\LanguageDetector\LanguageDetector';
+        $alias = 'language.detector';
+
+        $this->assertInstanceOf($implementation, $this->app[$alias]);
+
+        $this->assertInstanceOf($implementation, $this->app[$contract]);
+
+        $this->assertInstanceOf($contract, $this->app[$contract]);
     }
 
     /**
@@ -46,6 +54,24 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
     /**
      * @return void
      */
+    public function testShouldNotCallDetectMethod()
+    {
+        $translator = $this->app['translator'];
+
+        $translator->setLocale('fr');
+
+        $this->assertEquals('fr', $translator->getLocale());
+
+        $this->app['config']->set('lang-detector.autodetect', false);
+
+        $this->registerServiceProvider();
+
+        $this->assertEquals('fr', $translator->getLocale());
+    }
+
+    /**
+     * @return void
+     */
     public function testShouldCallDetectMethod()
     {
         $translator = $this->app['translator'];
@@ -55,6 +81,24 @@ class LanguageDetectorServiceProviderTest extends AbstractTestCase
         $this->assertEquals('fr', $translator->getLocale());
 
         $this->registerServiceProvider();
+
+        $this->assertEquals('en', $translator->getLocale());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldDetectLanguage()
+    {
+        $translator = $this->app['translator'];
+
+        $translator->setLocale('fr');
+
+        $this->assertEquals('fr', $translator->getLocale());
+
+        $this->registerServiceProvider();
+
+        $this->app['language.detector']->detect();
 
         $this->assertEquals('en', $translator->getLocale());
     }

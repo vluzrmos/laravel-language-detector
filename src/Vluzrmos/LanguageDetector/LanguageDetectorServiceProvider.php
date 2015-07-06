@@ -54,7 +54,9 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function registerLanguageDetector()
     {
-        $this->app->singleton('language.detector', function () {
+        $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetector';
+
+        $this->app->singleton($contract, function () {
             return new LanguageDetector(
                 $this->app['request'],
                 $this->app['translator'],
@@ -62,7 +64,11 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app['language.detector']->detect();
+        $this->app->alias($contract, 'language.detector');
+
+        if ($this->app['config']->get('lang-detector.autodetect', true)) {
+            $this->app[$contract]->detect(true);
+        }
     }
 
     /**

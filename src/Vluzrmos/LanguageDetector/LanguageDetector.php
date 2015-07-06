@@ -3,14 +3,14 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Illuminate\Http\Request;
-use Negotiation\LanguageNegotiator as Negotiator;
+use Vluzrmos\LanguageDetector\Contracts\LanguageDetector as DetectorContract;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class LanguageDetector
  * @package Vluzrmos\LanguageDetector
  */
-class LanguageDetector
+class LanguageDetector implements DetectorContract
 {
     /**
      * @var \Illuminate\Http\Request Illuminate (Laravel or Lumen) Request.
