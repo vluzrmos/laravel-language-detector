@@ -16,6 +16,8 @@ class LanguageDetectorTest extends AbstractTestCase
     {
         $detector = $this->createInstance('en');
 
+        $this->setAppLocale('fr');
+
         $detected = $detector->detect(false);
 
         $locale = $this->getAppLocale();
@@ -28,13 +30,13 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldSeePtBRLanguage()
     {
-        $detector = $this->createInstance('pt-BR');
+        $detector = $this->createInstance('pt_BR');
 
         $this->setAppLocale('en');
 
         $detector->detect();
 
-        $this->assertEquals('pt-BR', $this->getAppLocale());
+        $this->assertEquals('pt_BR', $this->getAppLocale());
     }
 
     /**
@@ -42,13 +44,15 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldAliasPtToPtBrLanguage()
     {
-        $detector = $this->createInstance('en', null, ['pt' => 'pt-BR', 'en']);
+        $detector = $this->createInstance('en', null, ['pt' => 'pt_BR', 'en']);
 
         $detected = $detector->detect(true);
 
         $this->assertNotEmpty($detected);
 
-        $this->assertEquals('pt-BR', $detected);
+        $this->assertEquals('pt_BR', $this->getAppLocale());
+
+        $this->assertEquals($detected, $this->getAppLocale());
     }
 
     /**
@@ -94,13 +98,13 @@ class LanguageDetectorTest extends AbstractTestCase
     public function testShouldGetAppLanguages()
     {
         $detector = $this->createInstance('en', null, [
-            'pt-BR',
+            'pt_BR',
             'en',
             'fr',
-            'pt_BR' => 'pt-BR',
+            'pt_BR' => 'pt_BR',
         ]);
 
-        $this->assertEquals(['pt-BR', 'en', 'fr', 'pt_BR'], $detector->appLanguages());
+        $this->assertEquals(['pt_BR', 'en', 'fr', 'pt_BR'], $detector->appLanguages());
     }
 
     /**
@@ -108,9 +112,9 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldGetBrowserLanguages()
     {
-        $detector = $this->createInstance('en', 'pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4');
+        $detector = $this->createInstance('en', 'pt_BR,pt;q=0.8,en-US;q=0.6,en;q=0.4');
 
-        $this->assertEquals('pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4', $detector->browserLanguages());
+        $this->assertEquals(['pt_BR', 'pt', 'en_US', 'en'], $detector->browserLanguages());
     }
 
     /**
@@ -118,12 +122,12 @@ class LanguageDetectorTest extends AbstractTestCase
      */
     public function testShouldAliaseTheLocale()
     {
-        $detector = $this->createInstance('pt-BR', 'en', [
-            'pt' => 'pt-BR',
+        $detector = $this->createInstance('pt_BR', 'en', [
+            'pt' => 'pt_BR',
             'en-US' => 'en',
         ]);
 
-        $this->setAppLocale('pt-BR');
+        $this->setAppLocale('pt_BR');
 
         $locale = $detector->detect(false);
 
@@ -139,8 +143,8 @@ class LanguageDetectorTest extends AbstractTestCase
     {
         $detector = $this->createInstance();
 
-        $detector->setRealLocale('pt-BR');
+        $detector->setRealLocale('pt_BR');
 
-        $this->assertEquals('pt-BR', $this->getAppLocale());
+        $this->assertEquals('pt_BR', $this->getAppLocale());
     }
 }

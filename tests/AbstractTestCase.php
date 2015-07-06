@@ -20,7 +20,7 @@ abstract class AbstractTestCase extends Testbench
      *
      * @return LanguageDetector
      */
-    public function createInstance($current = 'en', $acceptLanguageHeader = null, $config = ['pt-BR', 'en'])
+    public function createInstance($current = 'en', $acceptLanguageHeader = null, $config = ['pt_BR', 'en'])
     {
         /** @var \Illuminate\Http\Request $request */
         $request = Request::create('http://localhost:8000', 'GET', [], [], [], [

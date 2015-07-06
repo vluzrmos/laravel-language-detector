@@ -54,12 +54,7 @@ class LanguageDetector
      */
     public function detect($apply = true)
     {
-        $accept = $this->negotiator->getBest(
-            $this->browserLanguages(),
-            $this->appLanguages()
-        );
-
-        $language = $accept ? $this->getAliasedLocale($accept->getValue()) : null;
+        $language = $this->getAliasedLocale($this->chooseBestLanguage());
 
         if ($apply && $language) {
             $this->setRealLocale($language);
@@ -75,7 +70,7 @@ class LanguageDetector
      */
     public function browserLanguages()
     {
-        return $this->request->header('Accept-Language');
+        return $this->request->getLanguages();
     }
 
     /**
@@ -85,13 +80,13 @@ class LanguageDetector
      */
     public function appLanguages()
     {
-        $map = [];
+        $languages = [];
 
         foreach ($this->availableLanguages as $key => $value) {
-            $map[] = $this->keyOrValue($key, $value);
+            $languages[] = $this->keyOrValue($key, $value);
         }
 
-        return $map;
+        return $languages;
     }
 
     /**
@@ -112,19 +107,14 @@ class LanguageDetector
     }
 
     /**
-     * Set the locale.
+     * Return the real locale based on available languages.
      *
      * @param string $locale
-     *
-     * @return string
+     * @return mixed
      */
-    public function setLocale($locale)
+    public function getAliasedLocale($locale)
     {
-        $locale = $this->getAliasedLocale($locale);
-
-        $this->setRealLocale($locale);
-
-        return $locale;
+        return isset($this->availableLanguages[$locale]) ? $this->availableLanguages[$locale] : $locale;
     }
 
     /**
@@ -139,13 +129,30 @@ class LanguageDetector
     }
 
     /**
-     * Return the real locale based on available languages.
+     * Get the best language between the browser and the application.
+     *
+     * @return array|null
+     */
+    public function chooseBestLanguage()
+    {
+        $accepted = array_intersect($this->appLanguages(), $this->browserLanguages());
+
+        return $accepted ? array_shift($accepted) : null;
+    }
+
+    /**
+     * Set the locale.
      *
      * @param string $locale
-     * @return mixed
+     *
+     * @return string
      */
-    public function getAliasedLocale($locale)
+    public function setLocale($locale)
     {
-        return isset($this->availableLanguages[$locale]) ? $this->availableLanguages[$locale] : $locale;
+        $locale = $this->getAliasedLocale($locale);
+
+        $this->setRealLocale($locale);
+
+        return $locale;
     }
 }
