@@ -1,3 +1,5 @@
 .idea/
 vendor/
 composer.lock
+.php_cs.cache
+tmp[a-zA-Z0-9]{6,99}

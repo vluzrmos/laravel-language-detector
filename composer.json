@@ -1,6 +1,6 @@
 {
   "name": "vluzrmos/language-detector",
-  "description": "A Laravel and Lumen Automatic Language Detector.",
+  "description": "A Laravel and Lumen Language Detector.",
   "keywords": ["Laravel", "Lumen", "Locale", "Language", "i18n"],
   "license": "MIT",
   "authors": [
@@ -11,23 +11,28 @@
   ],
   "type": "package",
   "require": {
-    "illuminate/support": "~5.0",
     "illuminate/config": "~5.0",
-    "illuminate/translation": "~5.0"
+    "illuminate/translation": "~5.0",
+    "illuminate/support": "~5.0"
   },
   "require-dev": {
-    "orchestra/testbench": "~3.0",
+    "fabpot/php-cs-fixer": "~2.0",
     "mockery/mockery": "0.9.*",
+    "orchestra/testbench": "~3.0",
     "phpunit/phpunit": "~4.0"
   },
   "autoload": {
     "psr-4": {
-      "Vluzrmos\\": "src/Vluzrmos/"
+      "Vluzrmos\\LanguageDetector\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Vluzrmos\\LanguageDetector\\": "tests/"
+      "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
     }
-  }
+  },
+  "config":{
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev"
 }

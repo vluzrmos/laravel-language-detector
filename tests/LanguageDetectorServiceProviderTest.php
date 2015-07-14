@@ -1,105 +1,50 @@
 <?php
 
-namespace Vluzrmos\LanguageDetector;
+namespace Vluzrmos\LanguageDetector\Testing;
 
-use Mockery;
+use Illuminate\Foundation\Application;
+use Orchestra\Testbench\TestCase;
 
 /**
- * Class LanguageDetectorServiceProviderTest
- * @package Vluzrmos\LanguageDetector
+ * Class LanguageDetectorServiceProviderTest.
  */
-class LanguageDetectorServiceProviderTest extends AbstractTestCase
+class LanguageDetectorServiceProviderTest extends TestCase
 {
-
     /**
-     * @return void
+     * Registering the service provider.
      */
-    public function testServiceContainer()
+    public function testShouldRegisterServiceProvider()
     {
-        $this->registerServiceProvider();
+        $driverShortcut = $this->app['config']->get('lang-detector.default_driver');
 
-        $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetector';
-        $implementation = 'Vluzrmos\LanguageDetector\LanguageDetector';
-        $alias = 'language.detector';
+        $this->assertInstanceOf(
+            'Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface',
+            $this->app['language.driver.'.$driverShortcut]
+        );
 
-        $this->assertInstanceOf($implementation, $this->app[$alias]);
+        $driver = $this->app['config']->get('lang-detector.drivers.'.$driverShortcut);
 
-        $this->assertInstanceOf($implementation, $this->app[$contract]);
+        $this->assertInstanceOf($driver, $this->app[$driver]);
 
-        $this->assertInstanceOf($contract, $this->app[$contract]);
+        $this->assertInstanceOf(
+            'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface',
+            $this->app['language.detector']
+        );
+
+        $this->assertInstanceOf(
+            'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface',
+            $this->app['Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface']
+        );
     }
 
     /**
-     * @return void
+     * @param Application $app
+     * @return array
      */
-    public function registerServiceProvider()
+    public function getPackageProviders($app)
     {
-        $this->app->register('Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider');
-    }
-
-    /**
-     * @return void
-     */
-    public function testDefaultConfiguration()
-    {
-        $this->registerServiceProvider();
-
-        $config = $this->app['config']->get('lang-detector.languages', null);
-
-        $this->assertNotEmpty($config);
-
-        $this->assertEquals(['en'], $config);
-    }
-
-    /**
-     * @return void
-     */
-    public function testShouldNotCallDetectMethod()
-    {
-        $translator = $this->app['translator'];
-
-        $translator->setLocale('fr');
-
-        $this->assertEquals('fr', $translator->getLocale());
-
-        $this->app['config']->set('lang-detector.autodetect', false);
-
-        $this->registerServiceProvider();
-
-        $this->assertEquals('fr', $translator->getLocale());
-    }
-
-    /**
-     * @return void
-     */
-    public function testShouldCallDetectMethod()
-    {
-        $translator = $this->app['translator'];
-
-        $translator->setLocale('fr');
-
-        $this->assertEquals('fr', $translator->getLocale());
-
-        $this->registerServiceProvider();
-
-        $this->assertEquals('en', $translator->getLocale());
-    }
-
-    /**
-     * @return void
-     */
-    public function testShouldDetectLanguage()
-    {
-        $translator = $this->app['translator'];
-
-        $translator->setLocale('fr');
-
-        $this->assertEquals('fr', $translator->getLocale());
-
-        $this->registerServiceProvider();
-
-        $this->app['language.detector']->detect();
-
-        $this->assertEquals('en', $translator->getLocale());
+        return [
+            'Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider',
+        ];
     }
 }
