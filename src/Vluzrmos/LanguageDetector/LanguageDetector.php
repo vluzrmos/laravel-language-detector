@@ -7,8 +7,7 @@ use Vluzrmos\LanguageDetector\Contracts\LanguageDetector as DetectorContract;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
- * Class LanguageDetector
- * @package Vluzrmos\LanguageDetector
+ * Class LanguageDetector.
  */
 class LanguageDetector implements DetectorContract
 {
@@ -88,7 +87,7 @@ class LanguageDetector implements DetectorContract
     /**
      * Get the $value if key is numeric or null, otherwise will return the key.
      *
-     * @param string|integer $key
+     * @param string|int $key
      * @param mixed          $value
      *
      * @return mixed

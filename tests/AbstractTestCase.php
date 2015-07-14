@@ -7,8 +7,7 @@ use Orchestra\Testbench\TestCase as Testbench;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class TestCase
- * @package Vluzrmos\LanguageDetector
+ * Class TestCase.
  */
 abstract class AbstractTestCase extends Testbench
 {
@@ -26,7 +25,7 @@ abstract class AbstractTestCase extends Testbench
             'HTTP_ACCEPT_LANGUAGE' => $acceptLanguageHeader ?: 'pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4',
         ]);
 
-        /**
+        /*
          * Translator Mock.
          * @var TranslatorInterface
          */

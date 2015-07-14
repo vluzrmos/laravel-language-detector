@@ -14,9 +14,9 @@ This package provides an easy way to detect and apply the user language based on
 
 Add the service provider to your providers list:
 
-## Laravel 
+## Laravel
 
-Edit your `config/app.php`: 
+Edit your `config/app.php`:
 
 ```
 Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class
@@ -33,7 +33,7 @@ php artisan vendor:publish
 
 Edit the `bootratrap/app.php`:
 
-Lumen doesn't support vendor publish, then you have to create manualy the configuration file or 
+Lumen doesn't support vendor publish, then you have to create manualy the configuration file or
 just copy the `config/lang-detector.php` to your `config/` path, then:
 
 ```php
@@ -45,7 +45,7 @@ $app->register(Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class)
 
 # Usage
 
-After install & configure the package, you have to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir. 
+After install & configure the package, you have to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
 The package will try to detect the browser prefered language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
 
 ```php
@@ -71,7 +71,7 @@ If you are not following that style of languages names, you just configure it on
 return [
     'languages' => [
         'pt_BR' => 'pt-BR', //will detect pt_BR language, and set pt-BR to the application,
-        'pt' => 'pt-BR', //aliasing, will detect pt and set pt-BR to the application 
+        'pt' => 'pt-BR', //aliasing, will detect pt and set pt-BR to the application
         'en', //will detect 'en' language
     ]
 ];
@@ -92,16 +92,16 @@ use Vluzrmos\LanguageDetector\Contracts\LanguageDetector;
 
 YourController extends Controller
 {
-    
+
     controllerMethod(LanguageDetector $detector)
     {
-        $detector->detect(); 
-        
+        $detector->detect();
+
         // or... just getting the language detected, not applying
         $language = $detector->detect(false);
     }
 
-} 
+}
 ```
 
 or use the helper:
@@ -112,7 +112,7 @@ app('language.detector')->detect();
 // just getting the language detected, not applying
 $language = app('language.detector')->detect(false);
 
-//or 
+//or
 
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetector;
 

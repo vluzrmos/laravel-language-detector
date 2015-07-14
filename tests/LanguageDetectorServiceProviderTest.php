@@ -5,12 +5,10 @@ namespace Vluzrmos\LanguageDetector;
 use Mockery;
 
 /**
- * Class LanguageDetectorServiceProviderTest
- * @package Vluzrmos\LanguageDetector
+ * Class LanguageDetectorServiceProviderTest.
  */
 class LanguageDetectorServiceProviderTest extends AbstractTestCase
 {
-
     /**
      * @return void
      */

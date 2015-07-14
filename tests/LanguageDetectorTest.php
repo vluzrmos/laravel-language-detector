@@ -3,12 +3,10 @@
 namespace Vluzrmos\LanguageDetector;
 
 /**
- * Class LanguageDetectorTest
- * @package Vluzrmos\LanguageDetector
+ * Class LanguageDetectorTest.
  */
 class LanguageDetectorTest extends AbstractTestCase
 {
-
     /**
      * @return void
      */
@@ -79,7 +77,7 @@ class LanguageDetectorTest extends AbstractTestCase
     {
         $detector = $this->createInstance();
 
-        $this->assertEquals("some-value", $detector->keyOrValue(null, "some-value"));
+        $this->assertEquals('some-value', $detector->keyOrValue(null, 'some-value'));
     }
 
     /**
@@ -89,7 +87,7 @@ class LanguageDetectorTest extends AbstractTestCase
     {
         $detector = $this->createInstance();
 
-        $this->assertEquals("some-key", $detector->keyOrValue("some-key", null));
+        $this->assertEquals('some-key', $detector->keyOrValue('some-key', null));
     }
 
     /**

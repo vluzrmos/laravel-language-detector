@@ -5,8 +5,7 @@ namespace Vluzrmos\LanguageDetector;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class LanguageDetectorServiceProvider
- * @package Vluzrmos\LanguageDetector
+ * Class LanguageDetectorServiceProvider.
  */
 class LanguageDetectorServiceProvider extends ServiceProvider
 {

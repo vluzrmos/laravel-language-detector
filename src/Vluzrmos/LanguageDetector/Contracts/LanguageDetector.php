@@ -3,12 +3,10 @@
 namespace Vluzrmos\LanguageDetector\Contracts;
 
 /**
- * Interface LanguageDetector
- * @package Vluzrmos\LanguageDetector\Contracts
+ * Interface LanguageDetector.
  */
 interface LanguageDetector
 {
-
     /**
      * Detect the browser locale with matches with configurations and $apply if it is true.
      * @param string $apply
