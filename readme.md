@@ -76,7 +76,7 @@ Right now, only the `browser` preferences detector is available, but some awesom
 
 - Subdomain Detector
 - Route Segment Detector
-- TLD Domain Type (.br, .me, .pt, .us ...) 
+- TLD Domain Type (.br, .me, .pt, .us ...)
 
 # Usage
 
@@ -84,7 +84,7 @@ After install & configure the package, you have to use the style `lang_LOCALE` o
 The package will try to detect the browser prefered language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
 
 ```php
-'languages' => ['en', 'fr', 'pt_BR' ...] 
+'languages' => ['en', 'fr', 'pt_BR' ...]
 ```
 example:
 
