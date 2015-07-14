@@ -35,6 +35,12 @@ class LanguageDetectorServiceProviderTest extends TestCase
             'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface',
             $this->app['Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface']
         );
+
+        $this->app['translator']->setLocale('fr');
+
+        $this->app['language.detector']->detectAndApply();
+
+        $this->assertEquals('en', $this->app['translator']->getLocale());
     }
 
     /**
