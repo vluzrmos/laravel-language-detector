@@ -37,7 +37,7 @@ abstract class AbstractDetector implements DetectorDriverInterface
      * @param Request $request   Current request.
      * @param array   $languages array of available languages.
      */
-    public function __construct(Request $request = null, array $languages = [])
+    public function __construct(Request $request, array $languages = [])
     {
         $this->setRequest($request);
         $this->setLanguages($languages);
