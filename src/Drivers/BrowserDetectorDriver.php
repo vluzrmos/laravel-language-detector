@@ -24,7 +24,7 @@ class BrowserDetectorDriver extends AbstractDetector
     /**
      * Get the best language between the browser and the application.
      *
-     * @return array|null
+     * @return string
      */
     public function chooseBestLanguage()
     {
