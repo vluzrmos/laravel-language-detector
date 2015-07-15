@@ -132,7 +132,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 /** @var AbstractDetector $instance */
                 $instance = new $driver($this->request, $languages);
 
-                $instance->setSegment($segment);
+                $instance->setDefaultSegment($segment);
 
                 return $instance;
             });

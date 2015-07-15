@@ -5,17 +5,22 @@ namespace Vluzrmos\LanguageDetector\Drivers;
 /**
  * Class UriDetectorDriver.
  */
-class UriDetectorDriver extends AbstractDetector
+class UriDetectorDriver extends SubdomainDetectorDriver
 {
     /**
-     * Return detected language.
+     * Minimun parts of the uri.
      *
-     * @return string
+     * @var int
      */
-    public function detect()
-    {
-        $parts = array_filter(preg_split('/\//', $this->request->path()));
+    protected $minParts = 1;
 
-        return count($parts) >= 1 ? $this->getAliasedLocale($parts[$this->getSegment()]) : null;
+    /**
+     * Get parts of the url.
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return array_filter(preg_split('/\//', $this->request->path()));
     }
 }

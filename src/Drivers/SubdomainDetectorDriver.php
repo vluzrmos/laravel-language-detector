@@ -8,14 +8,37 @@ namespace Vluzrmos\LanguageDetector\Drivers;
 class SubdomainDetectorDriver extends AbstractDetector
 {
     /**
+     * Minimun parts of the subdomain.
+     *
+     * @var int
+     */
+    protected $minParts = 3;
+
+    /**
      * Return detected language.
      *
      * @return string
      */
     public function detect()
     {
-        $parts = preg_split('/\./', $this->request->getHost());
+        $parts = $this->getSegments();
 
-        return count($parts) >= 3 ? $this->getAliasedLocale($parts[$this->getSegment()]) : null;
+        if (count($parts) >= $this->minParts) {
+            $locale = $parts[$this->getDefaultSegment()];
+
+            return $this->getAliasedLocale($locale);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get parts of the subdomain.
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return preg_split('/\./', $this->request->getHost());
     }
 }

@@ -64,7 +64,7 @@ abstract class AbstractDetector implements DetectorDriverInterface
      *
      * @param int $segment
      */
-    public function setSegment($segment = 0)
+    public function setDefaultSegment($segment = 0)
     {
         $this->segment = $segment;
     }
@@ -74,7 +74,7 @@ abstract class AbstractDetector implements DetectorDriverInterface
      *
      * @return int
      */
-    public function getSegment()
+    public function getDefaultSegment()
     {
         return $this->segment;
     }
