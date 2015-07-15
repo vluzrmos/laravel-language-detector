@@ -4,8 +4,10 @@ namespace Vluzrmos\LanguageDetector\Providers;
 
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Vluzrmos\LanguageDetector\Drivers\AbstractDetector;
 use Vluzrmos\LanguageDetector\LanguageDetector;
 
 /**
@@ -117,14 +119,22 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $languages = $this->config('languages', []);
 
+        $segment = $this->config('segment', 0);
+
         $drivers = [
             'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
             'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
+            'uri' => 'Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver',
         ];
 
         foreach ($drivers as $short => $driver) {
-            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages) {
-                return new $driver($this->request, $languages);
+            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
+                /** @var AbstractDetector $instance */
+                $instance = new $driver($this->request, $languages);
+
+                $instance->setSegment($segment);
+
+                return $instance;
             });
 
             $this->app->alias('language.driver.'.$short, $driver);

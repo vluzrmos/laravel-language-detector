@@ -15,7 +15,7 @@ class LanguageDetectorServiceProviderTest extends TestCase
      */
     public function testShouldRegisterServiceProvider()
     {
-        $drivers = ['browser', 'subdomain'];
+        $drivers = ['browser', 'subdomain', 'uri'];
 
         foreach ($drivers as $shortcut) {
             $this->assertInstanceOf(

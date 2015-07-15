@@ -25,6 +25,13 @@ abstract class AbstractDetector implements DetectorDriverInterface
     protected $languages;
 
     /**
+     * Default segment to use on uri and browser detectors.
+     *
+     * @var int
+     */
+    protected $segment = 0;
+
+    /**
      * Browser Language Detector.
      *
      * @param Request $request   The request.
@@ -52,6 +59,25 @@ abstract class AbstractDetector implements DetectorDriverInterface
         return $languages;
     }
 
+    /**
+     * Set default segment value.
+     *
+     * @param int $segment
+     */
+    public function setSegment($segment = 0)
+    {
+        $this->segment = $segment;
+    }
+
+    /**
+     * Get default segment value.
+     *
+     * @return int
+     */
+    public function getSegment()
+    {
+        return $this->segment;
+    }
     /**
      * Get the $value if key is numeric or null, otherwise will return the key.
      *
