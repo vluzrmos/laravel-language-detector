@@ -8,15 +8,10 @@ return [
 
     /*
      * Default driver to use to detect the request language.
+     *
+     * Available: browser, subdomain.
      */
-    'default_driver' => 'browser',
-
-    /*
-     * Drivers that should be loaded.
-     */
-    'drivers' => [
-        'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
-    ],
+    'driver' => 'browser',
 
     /*
      * Languages available on the application.

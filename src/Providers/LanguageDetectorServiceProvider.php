@@ -96,7 +96,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface';
 
-        $driver = $this->config('default_driver', 'browser');
+        $driver = $this->config('driver', 'browser');
 
         $this->app->singleton($contract, function () use ($driver) {
             return new LanguageDetector(
@@ -115,16 +115,19 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function registerDetectorDrivers()
     {
-        $drivers = $this->config('drivers', []);
-
         $languages = $this->config('languages', []);
 
-        foreach ($drivers as $shortcut => $driver) {
-            $this->app->singleton('language.driver.'.$shortcut, function () use ($driver, $languages) {
+        $drivers = [
+            'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
+            'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
+        ];
+
+        foreach ($drivers as $short => $driver) {
+            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages) {
                 return new $driver($this->request, $languages);
             });
 
-            $this->app->alias('language.driver.'.$shortcut, $driver);
+            $this->app->alias('language.driver.'.$short, $driver);
         }
     }
 

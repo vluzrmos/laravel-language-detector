@@ -82,7 +82,7 @@ Right now, only the `browser` preferences detector is available, but some awesom
 
 - Subdomain Detector
 - Route Segment Detector
-- TLD Domain Type (.br, .me, .pt, .us ...)
+- TLD Domain Type Detector (.br, .me, .pt, .us ...)
 
 # Usage
 
@@ -110,6 +110,7 @@ If you are not following that style of languages names, you just configure it on
 'languages' => [
     'pt_BR' => 'pt-BR', //will detect pt_BR language, and set pt-BR to the application,
     'pt' => 'pt-BR', //aliasing, will detect pt and set pt-BR to the application
+    'pt-br' => "pt-BR", //aliasing, will detect pt-br and set pt-BR to the application (you will need it with subdomain driver)
     'en', //will detect 'en' language
 ]
 ```

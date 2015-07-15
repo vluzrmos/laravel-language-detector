@@ -15,16 +15,14 @@ class LanguageDetectorServiceProviderTest extends TestCase
      */
     public function testShouldRegisterServiceProvider()
     {
-        $driverShortcut = $this->app['config']->get('lang-detector.default_driver');
+        $drivers = ['browser', 'subdomain'];
 
-        $this->assertInstanceOf(
-            'Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface',
-            $this->app['language.driver.'.$driverShortcut]
-        );
-
-        $driver = $this->app['config']->get('lang-detector.drivers.'.$driverShortcut);
-
-        $this->assertInstanceOf($driver, $this->app[$driver]);
+        foreach ($drivers as $shortcut) {
+            $this->assertInstanceOf(
+                'Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface',
+                $this->app['language.driver.'.$shortcut]
+            );
+        }
 
         $this->assertInstanceOf(
             'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface',

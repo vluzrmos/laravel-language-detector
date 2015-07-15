@@ -42,7 +42,11 @@ class LanguageDetector implements LanguageDetectorInterface
     {
         $language = $this->detect();
 
-        $this->apply($language);
+        if ($language) {
+            $this->apply($language);
+        }
+
+        return $language;
     }
 
     /**
