@@ -88,11 +88,11 @@ return [
 There are a few drivers that you might to use, choose one which matches with your application design:
 
 ## Browser Preferences
-The driver `browser` will try to detect the language of the application based on the request languages (browser preferences). That driver doesn't need any other configuration, just configure the available languages, an that is it.
+The driver `browser` will try to detect the language of the application based on the request languages (browser preferences). This driver doesn't need any other configuration, just configure the available languages.
 
 ## Subdomains
 The driver `subdomain`  will try to detect the language of the application which matches with subdomain of the hostname.
-ex.: 
+eg.: 
     
     http://fr.site.domain
 
@@ -116,6 +116,27 @@ Route::group(['prefix' => $prefix], function () {
 	// ...
 });
 ```
+
+**Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use that script:
+
+```php
+$prefix = app('language.routePrefix');
+
+$options = [];
+
+if (!empty($prefix) && $prefix!="/") {
+    $options['prefix'] = $prefix;
+}
+
+// any other options here
+$options['namespace'] = 'App\Http\Controllers';
+
+$app->group($options, function () use($app) {
+	// ...
+});
+```
+
+> Note: That is only for Lumen 5.0, the newest version already fixes it.
 
 # Aliasing language locales
 
@@ -146,51 +167,6 @@ If you are not following that style of languages names, or in cases you are usin
     'pt-br' => "pt-BR", //aliasing, will detect pt-br and set pt-BR to the application (you will need it with subdomain driver)
     'en', //will detect 'en' language
 ]
-```
-
-# IoC
-
-If you not want to always detect automatically the language, you just disable that feature on `config/lang-detector.php`:
-
-```php
-'autodetect' => false //disabling
-```
-
-And use the contract `Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface`:
-
-```php
-use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface as LanguageDetector;
-
-YourController extends Controller
-{
-
-    controllerMethod(LanguageDetector $detector)
-    {
-        $detector->detectAndApply();
-
-        // or... just get the language detected, not applying
-        $language = $detector->detect();
-    }
-
-}
-```
-
-or use the helper:
-
-```php
-app('language.detector')->detectAndApply();
-
-// just getting the language detected, not applying
-$language = app('language.detector')->detect();
-
-//or
-
-use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface as LanguageDetector;
-
-app(LanguageDetector::class)->detectAndApply();
-
-// or, just get the language detected, not applying
-$language = app(LanguageDetector::class)->detect();
 ```
 
 
