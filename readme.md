@@ -27,7 +27,7 @@ Edit your `config/app.php`:
 Please, put that provider before your own `App\Providers\RouteServiceProvider`:
 
 ```
-Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class
+Vluzrmos\LanguageDetector\LanguageDetector\Providers\ServiceProvider::class
 ```
 > ::class notation is optional.
 
@@ -47,7 +47,7 @@ just copy the `config/lang-detector.php` to your `config/` path, then:
 ```php
 $app->configure('lang-detector');//be sure that is before register the package
 
-$app->register(Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class);
+$app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class);
 ```
 > ::class notation is optional.
 
