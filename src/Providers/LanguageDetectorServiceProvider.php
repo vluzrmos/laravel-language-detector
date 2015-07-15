@@ -52,10 +52,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $configFile = $this->configFile();
 
-        $this->publishes([
-                             $configFile => base_path('config/lang-detector.php'),
-                         ]
-        );
+        $this->publishes([$configFile => base_path('config/lang-detector.php')]);
 
         $this->mergeConfigFrom($configFile, 'lang-detector');
     }
@@ -94,8 +91,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 $instance->setDefaultSegment($segment);
 
                 return $instance;
-            }
-            );
+            });
 
             $this->app->alias('language.driver.'.$short, $driver);
         }
@@ -128,8 +124,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 $this->translator,
                 $this->app['language.driver.'.$driver]
             );
-        }
-        );
+        });
 
         $this->app->alias($contract, 'language.detector');
     }
