@@ -101,8 +101,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
                 return $instance;
             });
-
-            $this->app->alias('language.driver.'.$short, $driver);
         }
     }
 
