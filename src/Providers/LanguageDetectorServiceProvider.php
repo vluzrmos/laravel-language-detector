@@ -150,7 +150,9 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         return [
             'language.detector',
-            'language.negotiator',
+            'language.driver.browser',
+            'language.driver.subdomain',
+            'language.driver.uri',
         ];
     }
 }
