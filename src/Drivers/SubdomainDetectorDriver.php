@@ -29,7 +29,7 @@ class SubdomainDetectorDriver extends AbstractDetector
             return $this->getAliasedLocale($locale);
         }
 
-        return null;
+        return;
     }
 
     /**
