@@ -2,7 +2,7 @@
 
 namespace Vluzrmos\LanguageDetector\Drivers;
 
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface;
 
 /**
