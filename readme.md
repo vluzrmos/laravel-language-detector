@@ -14,9 +14,9 @@ This package provides an easy way to detect and apply the user language.
 
 # Installation
 
-`composer require vluzrmos/language-detector`
+Require the package with composer:
 
-# Configuration
+`composer require vluzrmos/language-detector`
 
 Add the service provider to your providers list:
 
