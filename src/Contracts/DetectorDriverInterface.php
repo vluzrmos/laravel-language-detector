@@ -2,8 +2,6 @@
 
 namespace Vluzrmos\LanguageDetector\Contracts;
 
-use Illuminate\Http\Request;
-
 /**
  * DetectorDriverInterface.
  */
