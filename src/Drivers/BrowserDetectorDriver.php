@@ -22,6 +22,18 @@ class BrowserDetectorDriver extends AbstractDetector
     }
 
     /**
+     * Get the best language between the browser and the application.
+     *
+     * @return array|null
+     */
+    public function chooseBestLanguage()
+    {
+        $accepted = array_intersect($this->browserLanguages(), $this->getLanguages());
+
+        return $accepted ? array_shift($accepted) : null;
+    }
+
+    /**
      * Get accept languages.
      *
      * @return array
@@ -29,17 +41,5 @@ class BrowserDetectorDriver extends AbstractDetector
     public function browserLanguages()
     {
         return $this->request->getLanguages();
-    }
-
-    /**
-     * Get the best language between the browser and the application.
-     *
-     * @return array|null
-     */
-    public function chooseBestLanguage()
-    {
-        $accepted = array_intersect($this->browserLanguages(), $this->appLanguages());
-
-        return $accepted ? array_shift($accepted) : null;
     }
 }

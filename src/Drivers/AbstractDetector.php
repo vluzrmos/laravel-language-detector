@@ -34,21 +34,41 @@ abstract class AbstractDetector implements DetectorDriverInterface
     /**
      * Browser Language Detector.
      *
-     * @param Request $request   The request.
+     * @param Request $request   Current request.
      * @param array   $languages array of available languages.
      */
-    public function __construct(Request $request, array $languages)
+    public function __construct(Request $request = null, array $languages = [])
     {
-        $this->request = $request;
-        $this->languages = $languages;
+        $this->setRequest($request);
+        $this->setLanguages($languages);
     }
 
     /**
-     * Get the languages for the application.
+     * Getter to the request.
+     *
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Setter to the request.
+     *
+     * @param Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Get the languages available for the application.
      *
      * @return array
      */
-    public function appLanguages()
+    public function getLanguages()
     {
         $languages = [];
 
@@ -57,6 +77,33 @@ abstract class AbstractDetector implements DetectorDriverInterface
         }
 
         return $languages;
+    }
+
+    /**
+     * Set languages available to the application.
+     *
+     * @param array $languages
+     */
+    public function setLanguages(array $languages)
+    {
+        $this->languages = $languages;
+    }
+
+    /**
+     * Get the $value if key is numeric or null, otherwise will return the key.
+     *
+     * @param string|int $key
+     * @param mixed      $value
+     *
+     * @return mixed
+     */
+    public function keyOrValue($key, $value)
+    {
+        if (is_numeric($key) || empty($key)) {
+            return $value;
+        }
+
+        return $key;
     }
 
     /**
@@ -77,22 +124,6 @@ abstract class AbstractDetector implements DetectorDriverInterface
     public function getDefaultSegment()
     {
         return $this->segment;
-    }
-    /**
-     * Get the $value if key is numeric or null, otherwise will return the key.
-     *
-     * @param string|int $key
-     * @param mixed      $value
-     *
-     * @return mixed
-     */
-    public function keyOrValue($key, $value)
-    {
-        if (is_numeric($key) or empty($key)) {
-            return $value;
-        }
-
-        return $key;
     }
 
     /**

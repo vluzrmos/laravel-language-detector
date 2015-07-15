@@ -4,7 +4,6 @@ namespace Vluzrmos\LanguageDetector\Providers;
 
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Vluzrmos\LanguageDetector\Drivers\AbstractDetector;
@@ -25,17 +24,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     protected $config;
 
     /**
-     * Get a config value.
-     * @param string $key
-     * @param mixed  $default
-     * @return mixed
-     */
-    public function config($key, $default = null)
-    {
-        return $this->config->get('lang-detector.'.$key, $default);
-    }
-
-    /**
      * Bootstrap the application.
      */
     public function boot()
@@ -46,7 +34,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
         $this->registerAndPublishConfigurations();
 
-        $this->registerDetectorDrivers();
+        $this->registerDrivers();
 
         $this->registerLanguageDetector();
 
@@ -55,6 +43,21 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             $detector = $this->app['language.detector'];
             $detector->detectAndApply();
         }
+    }
+
+    /**
+     * Register and publish configuration files.
+     */
+    public function registerAndPublishConfigurations()
+    {
+        $configFile = $this->configFile();
+
+        $this->publishes([
+                             $configFile => base_path('config/lang-detector.php'),
+                         ]
+        );
+
+        $this->mergeConfigFrom($configFile, 'lang-detector');
     }
 
     /**
@@ -68,27 +71,47 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the package.
+     * Register drivers.
      *
      * @return void
      */
-    public function register()
+    public function registerDrivers()
     {
+        $languages = $this->config('languages', []);
+
+        $segment = $this->config('segment', 0);
+
+        $drivers = [
+            'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
+            'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
+            'uri' => 'Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver',
+        ];
+
+        foreach ($drivers as $short => $driver) {
+            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
+                /** @var AbstractDetector $instance */
+                $instance = new $driver($this->request, $languages);
+                $instance->setDefaultSegment($segment);
+
+                return $instance;
+            }
+            );
+
+            $this->app->alias('language.driver.'.$short, $driver);
+        }
     }
 
     /**
-     * Register and publish configuration files.
+     * Get a config value.
+     * @param string $key
+     * @param mixed  $default
+     * @return mixed
      */
-    public function registerAndPublishConfigurations()
+    public function config($key, $default = null)
     {
-        $configFile = $this->configFile();
-
-        $this->publishes([
-             $configFile => base_path('config/lang-detector.php'),
-        ]);
-
-        $this->mergeConfigFrom($configFile, 'lang-detector');
+        return $this->config->get('lang-detector.'.$key, $default);
     }
+
     /**
      * Register the detector instance.
      *
@@ -105,40 +128,19 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 $this->translator,
                 $this->app['language.driver.'.$driver]
             );
-        });
+        }
+        );
 
         $this->app->alias($contract, 'language.detector');
     }
 
     /**
-     * Register drivers.
+     * Register the package.
      *
      * @return void
      */
-    public function registerDetectorDrivers()
+    public function register()
     {
-        $languages = $this->config('languages', []);
-
-        $segment = $this->config('segment', 0);
-
-        $drivers = [
-            'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
-            'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
-            'uri' => 'Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver',
-        ];
-
-        foreach ($drivers as $short => $driver) {
-            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
-                /** @var AbstractDetector $instance */
-                $instance = new $driver($this->request, $languages);
-
-                $instance->setDefaultSegment($segment);
-
-                return $instance;
-            });
-
-            $this->app->alias('language.driver.'.$short, $driver);
-        }
     }
 
     /**
