@@ -23,13 +23,11 @@ class SubdomainDetectorDriver extends AbstractDetector
     {
         $parts = $this->getSegments();
 
-        if (count($parts) >= $this->minParts) {
+        if ($this->isPartsValid($parts)) {
             $locale = $parts[$this->getDefaultSegment()];
 
             return $this->getAliasedLocale($locale);
         }
-
-        return;
     }
 
     /**
@@ -40,5 +38,16 @@ class SubdomainDetectorDriver extends AbstractDetector
     public function getSegments()
     {
         return preg_split('/\./', $this->request->getHost());
+    }
+
+    /**
+     * Check if parts of the url are valid.
+     *
+     * @param array $parts
+     * @return bool
+     */
+    public function isPartsValid(array $parts)
+    {
+        return count($parts) >= $this->minParts;
     }
 }

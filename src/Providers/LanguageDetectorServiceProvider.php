@@ -25,6 +25,8 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application.
+     *
+     * @return void
      */
     public function boot()
     {
@@ -41,12 +43,19 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         if ($this->config('autodetect', true)) {
             /** @var LanguageDetector $detector */
             $detector = $this->app['language.detector'];
+
             $detector->detectAndApply();
         }
+
+        $this->app->bind('language.routePrefix', function () {
+            return $this->app['language.detector']->routePrefix();
+        });
     }
 
     /**
      * Register and publish configuration files.
+     *
+     * @return void
      */
     public function registerAndPublishConfigurations()
     {

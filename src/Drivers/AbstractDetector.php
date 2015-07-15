@@ -130,10 +130,14 @@ abstract class AbstractDetector implements DetectorDriverInterface
      * Return the real locale based on available languages.
      *
      * @param string $locale
-     * @return mixed
+     * @return string|null
      */
     public function getAliasedLocale($locale)
     {
-        return isset($this->languages[$locale]) ? $this->languages[$locale] : $locale;
+        if (isset($this->languages[$locale])) {
+            return $this->languages[$locale];
+        }
+
+        return in_array($locale, $this->languages) ?  $locale : null;
     }
 }

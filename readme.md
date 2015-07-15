@@ -1,4 +1,4 @@
-# Laravel And Lumen Language Detector
+# Laravel Language Detector
 
 [![Join the chat at https://gitter.im/vluzrmos/laravel-language-detector](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vluzrmos/laravel-language-detector?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -12,7 +12,7 @@
 
 This package provides an easy way to detect and apply the user language.
 
-# Instalation
+# Installation
 
 `composer require vluzrmos/language-detector`
 
@@ -23,6 +23,8 @@ Add the service provider to your providers list:
 ## Laravel
 
 Edit your `config/app.php`:
+
+Please, put that provider before your own `App\Providers\RouteServiceProvider`:
 
 ```
 Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class
@@ -39,7 +41,7 @@ php artisan vendor:publish
 
 Edit the `bootratrap/app.php`:
 
-Lumen doesn't support vendor publish, then you have to create manualy the configuration file or
+Lumen doesn't support vendor publish, then you have to create manually the configuration file or
 just copy the `config/lang-detector.php` to your `config/` path, then:
 
 ```php
@@ -53,6 +55,8 @@ $app->register(Vluzrmos\LanguageDetector\LanguageDetectorServiceProvider::class)
 That is the default configuration file:
 
 ```php
+<?php
+
 return [
     /*
      * Indicates whenever should autodetect and apply the language of the request.
@@ -61,15 +65,16 @@ return [
 
     /*
      * Default driver to use to detect the request language.
+     *
+     * Available: browser, subdomain, uri.
      */
-    'default_driver' => 'browser',
+    'driver' => 'browser',
 
     /*
-     * Drivers that should be loaded.
+     * Used on subdomain and uri drivers. That indicates which segment should be used
+     * to verify the language.
      */
-    'drivers' => [
-        'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
-    ],
+    'segment' => 0,
 
     /*
      * Languages available on the application.
@@ -78,33 +83,61 @@ return [
 ];
 ```
 
-Right now, only the `browser` preferences detector is available, but some awesome drivers is comming:
+# Detector Drivers
 
-- Subdomain Detector
-- Route Segment Detector
-- TLD Domain Type Detector (.br, .me, .pt, .us ...)
+There are a few drivers that you might to use, choose one which matches with your application design:
 
-# Usage
+## Browser Preferences
+The driver `browser` will try to detect the language of the application based on the request languages (browser preferences). That driver doesn't need any other configuration, just configure the available languages, an that is it.
 
-After install & configure the package, you have to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
-The package will try to detect the browser prefered language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
+## Subdomains
+The driver `subdomain`  will try to detect the language of the application which matches with subdomain of the hostname.
+ex.: 
+    
+    http://fr.site.domain
+
+The `subdomain` driver will detect `fr` language and set to the application if that is in available languages on `lang-detector` config file.
+
+> Note: subdomain and uri drivers needs you aliases the language-locales on lang-detector config file.
+
+## Route Prefixes 
+The driver `uri` will try to detect the language based on the route prefix:
+
+    http://site.domain/en-us/home
+
+will detect en-us and set it to the application. (Note: consider to alias that locale)
+
+With `uri` driver, your route group needs be like this:
 
 ```php
-'languages' => ['en', 'fr', 'pt_BR' ...]
+$prefix = app('language.routePrefix');
+
+Route::group(['prefix' => $prefix], function () {
+	// ...
+});
+```
+
+# Aliasing language locales
+
+You might to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
+The package will try to detect the language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
+
+```php
+'languages' => ['en', 'pt_BR' ...]
 ```
 example:
 
 ```
 ├── lang
-│   ├── en
-│   │   ├── messages.php
-│   │   └── validation.php
-│   └── pt_BR
-│       ├── messages.php
-│       └── validation.php
+│   ├── en
+│   │   ├── messages.php
+│   │   └── validation.php
+│   └── pt_BR
+│       ├── messages.php
+│       └── validation.php
 ```
 
-If you are not following that style of languages names, you just configure it on `config/lang-detector.php` file:
+If you are not following that style of languages names, or in cases you are using the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php` file:
 
 ```php
 'languages' => [
@@ -114,6 +147,8 @@ If you are not following that style of languages names, you just configure it on
     'en', //will detect 'en' language
 ]
 ```
+
+# IoC
 
 If you not want to always detect automatically the language, you just disable that feature on `config/lang-detector.php`:
 
@@ -159,5 +194,6 @@ $language = app(LanguageDetector::class)->detect();
 ```
 
 
+# License
 
-
+MIT.
