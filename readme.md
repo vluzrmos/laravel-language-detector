@@ -120,7 +120,7 @@ With `uri` driver, your route group needs be like this:
 
 // Laravel
 Route::group(['prefix' => app('language.routePrefix'), 'namespace' => 'App\Http\Controllers'], function ($router) {
-	// ...
+	require __DIR__.'/../Http/routes.php';
 });
 
 //For lumen, it should be on bootstrap/app.php.
