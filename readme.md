@@ -10,7 +10,7 @@
 [![Code Climate](https://codeclimate.com/github/vluzrmos/laravel-language-detector/badges/gpa.svg)](https://codeclimate.com/github/vluzrmos/laravel-language-detector)
 [![StyleCI](https://styleci.io/repos/38231293/shield)](https://styleci.io/repos/38231293)
 
-This package provides an easy way to detect and apply the user language.
+This package provides an easy way to detect and apply the language for your application using [browser preferences](#browser-preferences), [subdomains](#subdomains) or [route prefixes](#route-prefixes).
 
 # Installation
 
@@ -55,8 +55,6 @@ $app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvid
 That is the default configuration file:
 
 ```php
-<?php
-
 return [
     /*
      * Indicates whenever should autodetect and apply the language of the request.
@@ -98,21 +96,19 @@ eg.:
 
 The `subdomain` driver will detect `fr` language and set to the application if that is in available languages on `lang-detector` config file.
 
-> Note: subdomain and uri drivers needs you aliases the language-locales on lang-detector config file.
+> Note: subdomain and uri drivers needs you [aliases](#aliasing-language-locales) the language-locales on lang-detector config file.
 
 ## Route Prefixes 
 The driver `uri` will try to detect the language based on the route prefix:
 
     http://site.domain/en-us/home
 
-will detect en-us and set it to the application. (Note: consider to alias that locale)
+will detect en-us and set it to the application. (Note: consider to [aliase](#aliasing-language-locales) that locale)
 
 With `uri` driver, your route group needs be like this:
 
 ```php
-$prefix = app('language.routePrefix');
-
-Route::group(['prefix' => $prefix], function () {
+Route::group(['prefix' => app('language.routePrefix')], function () {
 	// ...
 });
 ```

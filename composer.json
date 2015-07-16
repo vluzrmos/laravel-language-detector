@@ -1,6 +1,6 @@
 {
   "name": "vluzrmos/language-detector",
-  "description": "A Laravel and Lumen Language Detector.",
+  "description": "Detect the language for your application using browser preferences, subdomains or route prefixes.",
   "keywords": ["Laravel", "Lumen", "Locale", "Language", "i18n"],
   "license": "MIT",
   "authors": [
