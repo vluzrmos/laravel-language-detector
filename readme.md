@@ -104,20 +104,31 @@ The driver `uri` will try to detect the language based on the route prefix:
 
     http://site.domain/en-us/home
 
-will detect en-us and set it to the application. (Note: consider to [aliase](#aliasing-language-locales) that locale)
+That driver will detect en-us and set it to the application. 
+(Note: Consider to [aliase](#aliasing-language-locales) that locale)
 
 And don't worry, if the url is like:
 
     http://site.domain/home
 
-the language will not be changed, the application will use your default language configured on your `config/app.php` file.
+The language will not be changed, the application will use your default language configured on your `config/app.php` file.
 
 With `uri` driver, your route group needs be like this:
 
 ```php
-Route::group(['prefix' => app('language.routePrefix')], function () {
+//That would be nice if you put (edit) it on your App\Providers\RouteServiceProvider.
+
+// Laravel
+Route::group(['prefix' => app('language.routePrefix'), 'namespace' => 'App\Http\Controllers'], function ($router) {
 	// ...
 });
+
+//For lumen, it should be on bootstrap/app.php.
+
+// Lumen
+$app->group(['prefix' => app('language.routePrefix'), 'namespace' => 'App\Http\Controllers'], function ($app) {
+   require __DIR__.'/../app/Http/routes.php';
+}
 ```
 
 **Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use 
@@ -140,7 +151,7 @@ $app->group($options, function () use($app) {
 });
 ```
 
-> Note: That is only for Lumen 5.0, the newest version already fixes it.
+> Note: That is only for Lumen 5.0, the newest version (5.1) already fixes it.
 
 # Aliasing language locales
 
@@ -164,7 +175,7 @@ example:
 │       └── validation.php
 ```
 
-If you are not following that style of languages names, or in cases you are using 
+If you are not following that style of languages names or if you are using 
 the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php` file:
 
 ```php
