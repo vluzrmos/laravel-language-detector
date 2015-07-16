@@ -186,6 +186,15 @@ the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php
     'en', //will detect 'en' language
 ]
 ```
+# Suggestions
+
+Consider to use that list of 46 default laravel messages translated:
+
+- [caouecs/laravel-lang](https://github.com/caouecs/Laravel-lang)
+
+If you want to translate your models you should use that package:
+
+- [dimsav/laravel-translatable](https://github.com/dimsav/laravel-translatable)
 
 # License
 
