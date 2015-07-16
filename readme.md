@@ -10,7 +10,8 @@
 [![Code Climate](https://codeclimate.com/github/vluzrmos/laravel-language-detector/badges/gpa.svg)](https://codeclimate.com/github/vluzrmos/laravel-language-detector)
 [![StyleCI](https://styleci.io/repos/38231293/shield)](https://styleci.io/repos/38231293)
 
-This package provides an easy way to detect and apply the language for your application using [browser preferences](#browser-preferences), [subdomains](#subdomains) or [route prefixes](#route-prefixes).
+This package provides an easy way to detect and apply the language for your application 
+using [browser preferences](#browser-preferences), [subdomains](#subdomains) or [route prefixes](#route-prefixes).
 
 # Installation
 
@@ -105,6 +106,12 @@ The driver `uri` will try to detect the language based on the route prefix:
 
 will detect en-us and set it to the application. (Note: consider to [aliase](#aliasing-language-locales) that locale)
 
+And don't worry, if the url is like:
+
+    http://site.domain/home
+
+the language will not be changed, the application will use your default language configured on your `config/app.php` file.
+
 With `uri` driver, your route group needs be like this:
 
 ```php
@@ -113,7 +120,8 @@ Route::group(['prefix' => app('language.routePrefix')], function () {
 });
 ```
 
-**Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use that script:
+**Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use 
+that script:
 
 ```php
 $prefix = app('language.routePrefix');
@@ -137,11 +145,13 @@ $app->group($options, function () use($app) {
 # Aliasing language locales
 
 You might to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
-The detector driver will try to detect the language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
+The language detector driver you have chosen will try to detect the language 
+which matches with `lang` or `lang_LOCALE` available on your `config/lang-detector.php`.
 
 ```php
 'languages' => ['en', 'pt_BR' ...]
 ```
+
 example:
 
 ```
@@ -154,7 +164,8 @@ example:
 │       └── validation.php
 ```
 
-If you are not following that style of languages names, or in cases you are using the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php` file:
+If you are not following that style of languages names, or in cases you are using 
+the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php` file:
 
 ```php
 'languages' => [
@@ -164,7 +175,6 @@ If you are not following that style of languages names, or in cases you are usin
     'en', //will detect 'en' language
 ]
 ```
-
 
 # License
 
