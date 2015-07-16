@@ -1,6 +1,6 @@
 <?php
 
-namespace Vluzrmos\LanguageDetector\Testing;
+namespace Vluzrmos\LanguageDetector\Testing\Providers;
 
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase;
