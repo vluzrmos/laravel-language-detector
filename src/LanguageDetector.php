@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
-use Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver;
+use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPrefixRoute;
 
 /**
  * Class LanguageDetector.
@@ -100,7 +100,7 @@ class LanguageDetector implements LanguageDetectorInterface
     {
         $driver = $this->getDriver();
 
-        if ($driver instanceof UriDetectorDriver) {
+        if ($driver instanceof ShouldPrefixRoute) {
             return $driver->routePrefix($this->translator->getLocale());
         }
 

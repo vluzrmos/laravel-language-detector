@@ -32,6 +32,10 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
         $this->detector->detectAndApply();
 
         $this->assertEquals('fr', $this->translator->getLocale());
+
+        $prefix = $uri->routePrefix($this->translator->getLocale());
+
+        $this->assertEmpty($prefix);
     }
 
     /**
@@ -55,6 +59,10 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
         $this->detector->detectAndApply();
 
         $this->assertEquals('en', $this->translator->getLocale());
+
+        $prefix = $uri->routePrefix($this->translator->getLocale());
+
+        $this->assertEquals('en', $prefix);
     }
 
     /**
@@ -78,5 +86,9 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
         $this->detector->detectAndApply();
 
         $this->assertEquals('en_US', $this->translator->getLocale());
+
+        $prefix = $uri->routePrefix($this->translator->getLocale());
+
+        $this->assertEquals('en-us', $prefix);
     }
 }

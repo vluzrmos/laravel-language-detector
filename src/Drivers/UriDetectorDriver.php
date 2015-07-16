@@ -2,10 +2,12 @@
 
 namespace Vluzrmos\LanguageDetector\Drivers;
 
+use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as PrefixRoutes;
+
 /**
  * Class UriDetectorDriver.
  */
-class UriDetectorDriver extends SubdomainDetectorDriver
+class UriDetectorDriver extends SubdomainDetectorDriver implements PrefixRoutes
 {
     /**
      * Minimun parts of the uri.
@@ -47,7 +49,7 @@ class UriDetectorDriver extends SubdomainDetectorDriver
      * Array of aliases to a given locale.
      *
      * @param $locale
-     * @return array|null
+     * @return array
      */
     protected function getAliasesToLocale($locale)
     {
@@ -62,7 +64,5 @@ class UriDetectorDriver extends SubdomainDetectorDriver
                 return $segment == $item;
             });
         }
-
-        return;
     }
 }
