@@ -3,7 +3,6 @@
 namespace Vluzrmos\LanguageDetector\Testing\Drivers;
 
 use Illuminate\Http\Request;
-use Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver;
 use Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver;
 
 /**

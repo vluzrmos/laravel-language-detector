@@ -17,10 +17,10 @@ abstract class AbstractDriversTestCase extends TestCase
     protected $detector;
 
     /**
-     * Symfony translator.
      * @var TranslatorInterface
      */
     protected $translator;
+
     /**
      * Set up the tests.
      */
