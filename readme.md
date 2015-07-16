@@ -10,7 +10,7 @@
 [![Code Climate](https://codeclimate.com/github/vluzrmos/laravel-language-detector/badges/gpa.svg)](https://codeclimate.com/github/vluzrmos/laravel-language-detector)
 [![StyleCI](https://styleci.io/repos/38231293/shield)](https://styleci.io/repos/38231293)
 
-This package provides an easy way to detect and apply the language for your application 
+This package provides an easy way to detect and apply the language for your application
 using [browser preferences](#browser-preferences), [subdomains](#subdomains) or [route prefixes](#route-prefixes).
 
 # Installation
@@ -91,20 +91,20 @@ The driver `browser` will try to detect the language of the application based on
 
 ## Subdomains
 The driver `subdomain`  will try to detect the language of the application which matches with subdomain of the hostname.
-eg.: 
-    
+eg.:
+
     http://fr.site.domain
 
 The `subdomain` driver will detect `fr` language and set to the application if that is in available languages on `lang-detector` config file.
 
 > Note: subdomain and uri drivers needs you [aliases](#aliasing-language-locales) the language-locales on lang-detector config file.
 
-## Route Prefixes 
+## Route Prefixes
 The driver `uri` will try to detect the language based on the route prefix:
 
     http://site.domain/en-us/home
 
-That driver will detect en-us and set it to the application. 
+That driver will detect en-us and set it to the application.
 (Note: Consider to [aliase](#aliasing-language-locales) that locale)
 
 And don't worry, if the url is like:
@@ -131,7 +131,7 @@ $app->group(['prefix' => app('language.routePrefix'), 'namespace' => 'App\Http\C
 }
 ```
 
-**Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use 
+**Issue**: Lumen 5.0 doesn't support route prefix with empty strings, you should use
 that script:
 
 ```php
@@ -156,7 +156,7 @@ $app->group($options, function () use($app) {
 # Aliasing language locales
 
 You might to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
-The language detector driver you have chosen will try to detect the language 
+The language detector driver you have chosen will try to detect the language
 which matches with `lang` or `lang_LOCALE` available on your `config/lang-detector.php`.
 
 ```php
@@ -175,7 +175,7 @@ example:
 │       └── validation.php
 ```
 
-If you are not following that style of languages names or if you are using 
+If you are not following that style of languages names or if you are using
 the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php` file:
 
 ```php

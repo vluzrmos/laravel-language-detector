@@ -10,10 +10,8 @@ use Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver;
  */
 class BrowserDetectorDriverTest extends AbstractDriversTestCase
 {
-
-
     /**
-     * Testing detection of default browser preferences. (default is en, en_US)
+     * Testing detection of default browser preferences. (default is en, en_US).
      */
     public function testShouldDetectWithBrowserDetectorDriver()
     {
@@ -38,7 +36,7 @@ class BrowserDetectorDriverTest extends AbstractDriversTestCase
     }
 
     /**
-     * Testing detection of default browser preferences and aliases. (default is en, en_US)
+     * Testing detection of default browser preferences and aliases. (default is en, en_US).
      */
     public function testShouldDetectWithBrowserDetectorDriverAndAliases()
     {
@@ -47,7 +45,7 @@ class BrowserDetectorDriverTest extends AbstractDriversTestCase
         /** @var Request $request */
         $request = Request::create('http://localhost:8000');
 
-        $driver = new BrowserDetectorDriver($request, ['en' => 'en_US' , 'pt-br']);
+        $driver = new BrowserDetectorDriver($request, ['en' => 'en_US', 'pt-br']);
 
         $locale = $driver->detect();
 

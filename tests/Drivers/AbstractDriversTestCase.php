@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Vluzrmos\LanguageDetector\LanguageDetector;
 
 /**
- * Class AbstractDriversTestCase
+ * Class AbstractDriversTestCase.
  */
 abstract class AbstractDriversTestCase extends TestCase
 {
