@@ -137,7 +137,7 @@ $app->group($options, function () use($app) {
 # Aliasing language locales
 
 You might to use the style `lang_LOCALE` or just `lang` on your `resources/lang` dir.
-The package will try to detect the language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
+The detector driver will try to detect the language which matches with `lang` or `lang_LOCALE` in `config/lang-detector.php`.
 
 ```php
 'languages' => ['en', 'pt_BR' ...]
