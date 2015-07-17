@@ -8,6 +8,7 @@
 [![Build Status](https://travis-ci.org/vluzrmos/laravel-language-detector.svg)](https://travis-ci.org/vluzrmos/laravel-language-detector)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vluzrmos/laravel-language-detector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vluzrmos/laravel-language-detector/?branch=master)
 [![Code Climate](https://codeclimate.com/github/vluzrmos/laravel-language-detector/badges/gpa.svg)](https://codeclimate.com/github/vluzrmos/laravel-language-detector)
+[![Codacy Badge](https://www.codacy.com/project/badge/f024fb197e1c4a298a537794cb077901)](https://www.codacy.com/app/vluzrmos/laravel-language-detector)
 [![StyleCI](https://styleci.io/repos/38231293/shield)](https://styleci.io/repos/38231293)
 
 This package provides an easy way to detect and apply the language for your application
