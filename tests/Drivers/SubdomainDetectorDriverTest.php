@@ -2,7 +2,6 @@
 
 namespace Vluzrmos\LanguageDetector\Testing\Drivers;
 
-use Illuminate\Http\Request;
 use Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver;
 
 /**
@@ -15,10 +14,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldNotChangeTheLocale()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://example.com');
+        $request = $this->createRequest('http://example.com');
 
         $subdomain = new SubdomainDetectorDriver($request, ['en']);
 
@@ -38,10 +34,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomain()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://en.example.com');
+        $request = $this->createRequest('http://en.example.com');
 
         $subdomain = new SubdomainDetectorDriver($request, ['en']);
 
@@ -61,10 +54,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomainAndAliases()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://en-us.example.com');
+        $request = $this->createRequest('http://en-us.example.com');
 
         $subdomain = new SubdomainDetectorDriver($request, ['en', 'en-us' => 'en_US']);
 

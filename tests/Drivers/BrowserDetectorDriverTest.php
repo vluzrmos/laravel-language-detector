@@ -2,7 +2,6 @@
 
 namespace Vluzrmos\LanguageDetector\Testing\Drivers;
 
-use Illuminate\Http\Request;
 use Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver;
 
 /**
@@ -15,10 +14,7 @@ class BrowserDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldDetectWithBrowserDetectorDriver()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://localhost:8000');
+        $request = $this->createRequest();
 
         $driver = new BrowserDetectorDriver($request, ['en']);
 
@@ -40,10 +36,7 @@ class BrowserDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldDetectWithBrowserDetectorDriverAndAliases()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://localhost:8000');
+        $request = $this->createRequest();
 
         $driver = new BrowserDetectorDriver($request, ['en' => 'en_US', 'pt-br']);
 

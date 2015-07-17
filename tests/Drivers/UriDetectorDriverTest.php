@@ -2,7 +2,6 @@
 
 namespace Vluzrmos\LanguageDetector\Testing\Drivers;
 
-use Illuminate\Http\Request;
 use Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver;
 
 /**
@@ -15,10 +14,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldNotChangeTheLocale()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://example.com');
+        $request = $this->createRequest('http://example.com');
 
         $uri = new UriDetectorDriver($request, ['en']);
 
@@ -42,10 +38,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheUri()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://example.com/en');
+        $request = $this->createRequest('http://example.com/en');
 
         $uri = new UriDetectorDriver($request, ['en']);
 
@@ -69,10 +62,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomainAndAliases()
     {
-        $this->translator->setLocale('fr');
-
-        /** @var Request $request */
-        $request = Request::create('http://example.com/en-us');
+        $request = $this->createRequest('http://example.com/en-us');
 
         $uri = new UriDetectorDriver($request, ['en', 'en-us' => 'en_US']);
 

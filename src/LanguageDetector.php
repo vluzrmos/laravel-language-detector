@@ -2,7 +2,6 @@
 
 namespace Vluzrmos\LanguageDetector;
 
-use Illuminate\Http\Request;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
@@ -14,7 +13,7 @@ use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPre
 class LanguageDetector implements LanguageDetectorInterface
 {
     /**
-     * Translator instace.
+     * Translator instance.
      * @var Translator
      */
     protected $translator;
@@ -84,7 +83,6 @@ class LanguageDetector implements LanguageDetectorInterface
      * Set locale to the application.
      *
      * @param string $locale
-     * @return mixed
      */
     public function apply($locale)
     {

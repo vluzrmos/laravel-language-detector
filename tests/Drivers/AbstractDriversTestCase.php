@@ -2,6 +2,7 @@
 
 namespace Vluzrmos\LanguageDetector\Testing\Drivers;
 
+use Illuminate\Http\Request;
 use Orchestra\Testbench\TestCase;
 use Symfony\Component\Translation\TranslatorInterface;
 use Vluzrmos\LanguageDetector\LanguageDetector;
@@ -12,11 +13,13 @@ use Vluzrmos\LanguageDetector\LanguageDetector;
 abstract class AbstractDriversTestCase extends TestCase
 {
     /**
+     * Language Detector instance.
      * @var LanguageDetector
      */
     protected $detector;
 
     /**
+     * Symfony translator instance.
      * @var TranslatorInterface
      */
     protected $translator;
@@ -31,5 +34,19 @@ abstract class AbstractDriversTestCase extends TestCase
         $this->translator = $this->app['translator'];
 
         $this->detector = new LanguageDetector($this->translator);
+
+        $this->translator->setLocale('fr');
+    }
+
+    /**
+     * Create a new request instance.
+     *
+     * @param string $uri
+     * @param string $method
+     * @return Request
+     */
+    public function createRequest($uri = 'http://localhost:8000', $method = 'GET')
+    {
+        return Request::create($uri, $method);
     }
 }

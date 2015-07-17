@@ -2,7 +2,7 @@
 
 namespace Vluzrmos\LanguageDetector\Providers;
 
-use Illuminate\Config\Repository;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -14,14 +14,33 @@ use Vluzrmos\LanguageDetector\LanguageDetector;
  */
 class LanguageDetectorServiceProvider extends ServiceProvider
 {
-    /** @var Translator $translator */
+    /**
+     * Symfony translator.
+     * @var Translator
+     */
     protected $translator;
 
-    /** @var Request $request */
+    /**
+     * Illuminate Request.
+     * @var Request
+     */
     protected $request;
 
-    /** @var Repository $config */
+    /**
+     * Configurations repository.
+     * @var Config
+     */
     protected $config;
+
+    /**
+     * Detector Drivers available and its shortcuts.
+     * @var array
+     */
+    protected $drivers = [
+        'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
+        'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
+        'uri' => 'Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver',
+    ];
 
     /**
      * Bootstrap the application.
@@ -36,20 +55,13 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
         $this->registerAndPublishConfigurations();
 
-        $this->registerDrivers();
+        $this->registerAllDrivers();
 
         $this->registerLanguageDetector();
 
-        if ($this->config('autodetect', true)) {
-            /** @var LanguageDetector $detector */
-            $detector = $this->app['language.detector'];
+        $this->detectAndApplyLanguage();
 
-            $detector->detectAndApply();
-        }
-
-        $this->app->bind('language.routePrefix', function () {
-            return $this->app['language.detector']->routePrefix();
-        });
+        $this->registerRoutePrefix();
     }
 
     /**
@@ -77,30 +89,18 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register drivers.
+     * Register All drivers available.
      *
      * @return void
      */
-    public function registerDrivers()
+    public function registerAllDrivers()
     {
         $languages = $this->config('languages', []);
 
         $segment = $this->config('segment', 0);
 
-        $drivers = [
-            'browser' => 'Vluzrmos\LanguageDetector\Drivers\BrowserDetectorDriver',
-            'subdomain' => 'Vluzrmos\LanguageDetector\Drivers\SubdomainDetectorDriver',
-            'uri' => 'Vluzrmos\LanguageDetector\Drivers\UriDetectorDriver',
-        ];
-
-        foreach ($drivers as $short => $driver) {
-            $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
-                /** @var AbstractDetector $instance */
-                $instance = new $driver($this->request, $languages);
-                $instance->setDefaultSegment($segment);
-
-                return $instance;
-            });
+        foreach ($this->drivers as $short => $driver) {
+            $this->registerDriver($short, $driver, $languages, $segment);
         }
     }
 
@@ -138,8 +138,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
     /**
      * Register the package.
-     *
-     * @return void
      */
     public function register()
     {
@@ -158,5 +156,58 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             'language.driver.subdomain',
             'language.driver.uri',
         ];
+    }
+
+    /**
+     * Detect and apply language for the application.
+     */
+    public function detectAndApplyLanguage()
+    {
+        if ($this->config('autodetect', true)) {
+            $this->getLanguageDetector()->detectAndApply();
+        }
+    }
+
+    /**
+     * Regiter in container the routePrefix.
+     *
+     * @return void
+     */
+    public function registerRoutePrefix()
+    {
+        $this->app->bind('language.routePrefix', function () {
+            return $this->getLanguageDetector()->routePrefix();
+        });
+    }
+
+    /**
+     * Get language.detector from container.
+     *
+     * @return LanguageDetector
+     */
+    public function getLanguageDetector()
+    {
+        return $this->app['language.detector'];
+    }
+
+    /**
+     * Register a driver on application container.
+     *
+     * @param string $short     Shortcut name of the driver.
+     * @param string $driver    Driver namespaced.
+     * @param array  $languages Array of available languages to the application.
+     * @param int    $segment   Segment used in Sudomain or Uri drivers.
+     *
+     * @return void
+     */
+    public function registerDriver($short, $driver, $languages, $segment)
+    {
+        $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
+            /** @var AbstractDetector $instance */
+            $instance = new $driver($this->request, $languages);
+            $instance->setDefaultSegment($segment);
+
+            return $instance;
+        });
     }
 }
