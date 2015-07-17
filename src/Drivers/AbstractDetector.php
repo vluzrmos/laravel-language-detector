@@ -90,23 +90,6 @@ abstract class AbstractDetector implements DetectorDriverInterface
     }
 
     /**
-     * Get the $value if key is numeric or null, otherwise will return the key.
-     *
-     * @param string|int $key
-     * @param mixed      $value
-     *
-     * @return mixed
-     */
-    public function keyOrValue($key, $value)
-    {
-        if (is_numeric($key) || empty($key)) {
-            return $value;
-        }
-
-        return $key;
-    }
-
-    /**
      * Set default segment value.
      *
      * @param int $segment
@@ -139,5 +122,22 @@ abstract class AbstractDetector implements DetectorDriverInterface
         }
 
         return in_array($locale, $this->languages) ?  $locale : null;
+    }
+
+    /**
+     * Get the $value if key is numeric or null, otherwise will return the key.
+     *
+     * @param string|int $key
+     * @param mixed      $value
+     *
+     * @return mixed
+     */
+    protected function keyOrValue($key, $value)
+    {
+        if (is_numeric($key) || empty($key)) {
+            return $value;
+        }
+
+        return $key;
     }
 }

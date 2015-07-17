@@ -14,9 +14,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldNotChangeTheLocale()
     {
-        $request = $this->createRequest('http://example.com');
-
-        $uri = new UriDetectorDriver($request, ['en']);
+        $uri = $this->createUriDetectorForRequest('http://example.com', ['en']);
 
         $locale = $uri->detect();
 
@@ -38,9 +36,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheUri()
     {
-        $request = $this->createRequest('http://example.com/en');
-
-        $uri = new UriDetectorDriver($request, ['en']);
+        $uri = $this->createUriDetectorForRequest('http://example.com/en', ['en']);
 
         $locale = $uri->detect();
 
@@ -62,9 +58,7 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomainAndAliases()
     {
-        $request = $this->createRequest('http://example.com/en-us');
-
-        $uri = new UriDetectorDriver($request, ['en', 'en-us' => 'en_US']);
+        $uri = $this->createUriDetectorForRequest('http://example.com/en-us', ['en', 'en-us' => 'en_US']);
 
         $locale = $uri->detect();
 
@@ -79,5 +73,21 @@ class UriDetectorDriverTest extends AbstractDriversTestCase
         $prefix = $uri->routePrefix($this->translator->getLocale());
 
         $this->assertEquals('en-us', $prefix);
+    }
+
+    /**
+     * Create an instance of UriDetectorDriver for a given Request Uri.
+     *
+     * @param string $requestUri Url of the request.
+     * @param array  $languages  Languages available on the application.
+     * @param string $method     Requested method.
+     *
+     * @return UriDetectorDriver
+     */
+    protected function createUriDetectorForRequest($requestUri, array $languages = [], $method = 'GET')
+    {
+        $request = $this->createRequest($requestUri, $method);
+
+        return new UriDetectorDriver($request, $languages);
     }
 }

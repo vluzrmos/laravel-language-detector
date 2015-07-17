@@ -14,9 +14,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldNotChangeTheLocale()
     {
-        $request = $this->createRequest('http://example.com');
-
-        $subdomain = new SubdomainDetectorDriver($request, ['en']);
+        $subdomain = $this->createSubdomainDetectorForRequest('http://example.com', ['en']);
 
         $locale = $subdomain->detect();
 
@@ -34,9 +32,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomain()
     {
-        $request = $this->createRequest('http://en.example.com');
-
-        $subdomain = new SubdomainDetectorDriver($request, ['en']);
+        $subdomain = $this->createSubdomainDetectorForRequest('http://en.example.com', ['en']);
 
         $locale = $subdomain->detect();
 
@@ -54,9 +50,7 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
      */
     public function testShouldMatchesWithTheSubdomainAndAliases()
     {
-        $request = $this->createRequest('http://en-us.example.com');
-
-        $subdomain = new SubdomainDetectorDriver($request, ['en', 'en-us' => 'en_US']);
+        $subdomain = $this->createSubdomainDetectorForRequest('http://en-us.example.com', ['en', 'en-us' => 'en_US']);
 
         $locale = $subdomain->detect();
 
@@ -67,5 +61,21 @@ class SubdomainDetectorDriverTest extends AbstractDriversTestCase
         $this->detector->detectAndApply();
 
         $this->assertEquals('en_US', $this->translator->getLocale());
+    }
+
+    /**
+     * Create an instance of SubdomainDetectorDriver for a given Request Uri.
+     *
+     * @param string $requestUri Url of the Request.
+     * @param array  $languages  Languages available on the application.
+     * @param string $method     Requested Method.
+     *
+     * @return SubdomainDetectorDriver
+     */
+    protected function createSubdomainDetectorForRequest($requestUri, array $languages = [], $method = 'GET')
+    {
+        $request = $this->createRequest($requestUri, $method);
+
+        return new SubdomainDetectorDriver($request, $languages);
     }
 }

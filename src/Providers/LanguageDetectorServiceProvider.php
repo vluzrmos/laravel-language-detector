@@ -65,78 +65,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register and publish configuration files.
-     *
-     * @return void
-     */
-    public function registerAndPublishConfigurations()
-    {
-        $configFile = $this->configFile();
-
-        $this->publishes([$configFile => base_path('config/lang-detector.php')]);
-
-        $this->mergeConfigFrom($configFile, 'lang-detector');
-    }
-
-    /**
-     * Get the file of configurations.
-     *
-     * @return string
-     */
-    public function configFile()
-    {
-        return __DIR__.'/../../config/lang-detector.php';
-    }
-
-    /**
-     * Register All drivers available.
-     *
-     * @return void
-     */
-    public function registerAllDrivers()
-    {
-        $languages = $this->config('languages', []);
-
-        $segment = $this->config('segment', 0);
-
-        foreach ($this->drivers as $short => $driver) {
-            $this->registerDriver($short, $driver, $languages, $segment);
-        }
-    }
-
-    /**
-     * Get a config value.
-     * @param string $key
-     * @param mixed  $default
-     * @return mixed
-     */
-    public function config($key, $default = null)
-    {
-        return $this->config->get('lang-detector.'.$key, $default);
-    }
-
-    /**
-     * Register the detector instance.
-     *
-     * @return void
-     */
-    public function registerLanguageDetector()
-    {
-        $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface';
-
-        $driver = $this->config('driver', 'browser');
-
-        $this->app->singleton($contract, function () use ($driver) {
-            return new LanguageDetector(
-                $this->translator,
-                $this->app['language.driver.'.$driver]
-            );
-        });
-
-        $this->app->alias($contract, 'language.detector');
-    }
-
-    /**
      * Register the package.
      */
     public function register()
@@ -159,9 +87,81 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register and publish configuration files.
+     *
+     * @return void
+     */
+    protected function registerAndPublishConfigurations()
+    {
+        $configFile = $this->configFile();
+
+        $this->publishes([$configFile => base_path('config/lang-detector.php')]);
+
+        $this->mergeConfigFrom($configFile, 'lang-detector');
+    }
+
+    /**
+     * Get the file of configurations.
+     *
+     * @return string
+     */
+    protected function configFile()
+    {
+        return __DIR__.'/../../config/lang-detector.php';
+    }
+
+    /**
+     * Register All drivers available.
+     *
+     * @return void
+     */
+    protected function registerAllDrivers()
+    {
+        $languages = $this->config('languages', []);
+
+        $segment = $this->config('segment', 0);
+
+        foreach ($this->drivers as $short => $driver) {
+            $this->registerDriver($short, $driver, $languages, $segment);
+        }
+    }
+
+    /**
+     * Get a config value.
+     * @param string $key
+     * @param mixed  $default
+     * @return mixed
+     */
+    protected function config($key, $default = null)
+    {
+        return $this->config->get('lang-detector.'.$key, $default);
+    }
+
+    /**
+     * Register the detector instance.
+     *
+     * @return void
+     */
+    protected function registerLanguageDetector()
+    {
+        $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface';
+
+        $driver = $this->config('driver', 'browser');
+
+        $this->app->singleton($contract, function () use ($driver) {
+            return new LanguageDetector(
+                $this->translator,
+                $this->app['language.driver.'.$driver]
+            );
+        });
+
+        $this->app->alias($contract, 'language.detector');
+    }
+
+    /**
      * Detect and apply language for the application.
      */
-    public function detectAndApplyLanguage()
+    protected function detectAndApplyLanguage()
     {
         if ($this->config('autodetect', true)) {
             $this->getLanguageDetector()->detectAndApply();
@@ -173,7 +173,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerRoutePrefix()
+    protected function registerRoutePrefix()
     {
         $this->app->bind('language.routePrefix', function () {
             return $this->getLanguageDetector()->routePrefix();
@@ -185,7 +185,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      *
      * @return LanguageDetector
      */
-    public function getLanguageDetector()
+    protected function getLanguageDetector()
     {
         return $this->app['language.detector'];
     }
@@ -200,7 +200,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerDriver($short, $driver, $languages, $segment)
+    protected function registerDriver($short, $driver, $languages, $segment)
     {
         $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
             /** @var AbstractDetector $instance */
