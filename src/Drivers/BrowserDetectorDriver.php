@@ -14,11 +14,9 @@ class BrowserDetectorDriver extends AbstractDetector
      */
     public function detect()
     {
-        $accept = $this->chooseBestLanguage();
+        $bestLanguage = $this->chooseBestLanguage();
 
-        $language = $accept ? $this->getAliasedLocale($accept) : null;
-
-        return $language;
+        return $this->getAliasedLocale($bestLanguage);
     }
 
     /**
@@ -28,13 +26,13 @@ class BrowserDetectorDriver extends AbstractDetector
      */
     public function chooseBestLanguage()
     {
-        $accepted = array_intersect($this->browserLanguages(), $this->getLanguages());
-
-        return $accepted ? array_shift($accepted) : null;
+        return $this->request->getPreferredLanguage($this->getLanguages());
     }
 
     /**
      * Get accept languages.
+     *
+     * @deprecated
      *
      * @return array
      */
