@@ -3,7 +3,7 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Symfony\Component\Translation\TranslatorInterface as Translator;
-use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface;
+use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface as Driver;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
 use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPrefixRoute;
 
@@ -20,15 +20,15 @@ class LanguageDetector implements LanguageDetectorInterface
 
     /**
      * Driver to detect and apply the language.
-     * @var DetectorDriverInterface
+     * @var Driver
      */
     protected $driver;
 
     /**
-     * @param Translator              $translator
-     * @param DetectorDriverInterface $driver
+     * @param Translator $translator
+     * @param Driver     $driver
      */
-    public function __construct(Translator $translator, DetectorDriverInterface $driver = null)
+    public function __construct(Translator $translator, Driver $driver = null)
     {
         $this->translator = $translator;
         $this->driver = $driver;
@@ -62,7 +62,8 @@ class LanguageDetector implements LanguageDetectorInterface
 
     /**
      * Get the driver.
-     * @return DetectorDriverInterface
+     *
+     * @return Driver
      */
     public function getDriver()
     {
@@ -72,9 +73,9 @@ class LanguageDetector implements LanguageDetectorInterface
     /**
      * Set driver to detect language.
      *
-     * @param DetectorDriverInterface $driver
+     * @param Driver $driver
      */
-    public function setDriver(DetectorDriverInterface $driver)
+    public function setDriver(Driver $driver)
     {
         $this->driver = $driver;
     }

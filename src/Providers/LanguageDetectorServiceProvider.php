@@ -93,21 +93,11 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     protected function registerAndPublishConfigurations()
     {
-        $configFile = $this->configFile();
+        $configFile = __DIR__.'/../../config/lang-detector.php';
 
         $this->publishes([$configFile => base_path('config/lang-detector.php')]);
 
         $this->mergeConfigFrom($configFile, 'lang-detector');
-    }
-
-    /**
-     * Get the file of configurations.
-     *
-     * @return string
-     */
-    protected function configFile()
-    {
-        return __DIR__.'/../../config/lang-detector.php';
     }
 
     /**
@@ -122,7 +112,16 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         $segment = $this->config('segment', 0);
 
         foreach ($this->drivers as $short => $driver) {
-            $this->registerDriver($short, $driver, $languages, $segment);
+            $this->app->singleton(
+                'language.driver.'.$short,
+                function () use ($driver, $languages, $segment) {
+                    /** @var AbstractDetector $instance */
+                    $instance = new $driver($this->request, $languages);
+                    $instance->setDefaultSegment($segment);
+
+                    return $instance;
+                }
+            );
         }
     }
 
@@ -148,12 +147,15 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
         $driver = $this->config('driver', 'browser');
 
-        $this->app->singleton($contract, function () use ($driver) {
-            return new LanguageDetector(
-                $this->translator,
-                $this->app['language.driver.'.$driver]
-            );
-        });
+        $this->app->singleton(
+            $contract,
+            function () use ($driver) {
+                return new LanguageDetector(
+                    $this->translator,
+                    $this->app['language.driver.'.$driver]
+                );
+            }
+        );
 
         $this->app->alias($contract, 'language.detector');
     }
@@ -169,18 +171,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Regiter in container the routePrefix.
-     *
-     * @return void
-     */
-    protected function registerRoutePrefix()
-    {
-        $this->app->bind('language.routePrefix', function () {
-            return $this->getLanguageDetector()->routePrefix();
-        });
-    }
-
-    /**
      * Get language.detector from container.
      *
      * @return LanguageDetector
@@ -191,23 +181,17 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register a driver on application container.
-     *
-     * @param string $short     Shortcut name of the driver.
-     * @param string $driver    Driver namespaced.
-     * @param array  $languages Array of available languages to the application.
-     * @param int    $segment   Segment used in Sudomain or Uri drivers.
+     * Regiter in container the routePrefix.
      *
      * @return void
      */
-    protected function registerDriver($short, $driver, $languages, $segment)
+    protected function registerRoutePrefix()
     {
-        $this->app->singleton('language.driver.'.$short, function () use ($driver, $languages, $segment) {
-            /** @var AbstractDetector $instance */
-            $instance = new $driver($this->request, $languages);
-            $instance->setDefaultSegment($segment);
-
-            return $instance;
-        });
+        $this->app->bind(
+            'language.routePrefix',
+            function () {
+                return $this->getLanguageDetector()->routePrefix();
+            }
+        );
     }
 }

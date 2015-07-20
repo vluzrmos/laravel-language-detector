@@ -23,11 +23,13 @@ class SubdomainDetectorDriver extends AbstractDetector
     {
         $parts = $this->getSegments();
 
+        $locale = null;
+
         if ($this->isPartsValid($parts)) {
             $locale = $parts[$this->getDefaultSegment()];
-
-            return $this->getAliasedLocale($locale);
         }
+
+        return $locale ? $this->getAliasedLocale($locale) : null;
     }
 
     /**

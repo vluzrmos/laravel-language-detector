@@ -121,7 +121,7 @@ abstract class AbstractDetector implements DetectorDriverInterface
             return $this->languages[$locale];
         }
 
-        return in_array($locale, $this->languages) ?  $locale : null;
+        return in_array($locale, $this->languages) ? $locale : null;
     }
 
     /**

@@ -17,16 +17,6 @@ class UriDetectorDriver extends SubdomainDetectorDriver implements PrefixRoutes
     protected $minParts = 1;
 
     /**
-     * Get parts of the url.
-     *
-     * @return array
-     */
-    public function getSegments()
-    {
-        return array_filter(preg_split('/\//', $this->request->path()));
-    }
-
-    /**
      * Get the prefix for routes based on a given locale.
      *
      * @param string $locale
@@ -36,13 +26,25 @@ class UriDetectorDriver extends SubdomainDetectorDriver implements PrefixRoutes
     {
         $parts = $this->getSegments();
 
-        if ($this->isPartsValid($parts) && $parts[$this->getDefaultSegment()] == $locale) {
+        if ($this->isPartsValid($parts) &&
+            $parts[$this->getDefaultSegment()] == $locale
+        ) {
             return $locale;
         }
 
         $aliases = $this->getAliasesToLocale($locale);
 
         return $aliases ? array_shift($aliases) : '';
+    }
+
+    /**
+     * Get parts of the url.
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return array_filter(preg_split('/\//', $this->request->path()));
     }
 
     /**
@@ -60,9 +62,14 @@ class UriDetectorDriver extends SubdomainDetectorDriver implements PrefixRoutes
         if ($this->isPartsValid($parts)) {
             $segment = $parts[$this->getDefaultSegment()];
 
-            return array_filter($aliases, function ($item) use ($segment) {
-                return $segment == $item;
-            });
+            return array_filter(
+                $aliases,
+                function ($item) use ($segment) {
+                    return $segment == $item;
+                }
+            );
         }
+
+        return [];
     }
 }
