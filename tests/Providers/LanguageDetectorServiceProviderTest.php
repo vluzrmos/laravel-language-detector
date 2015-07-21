@@ -47,8 +47,11 @@ class LanguageDetectorServiceProviderTest extends TestCase
      */
     public function getPackageProviders($app)
     {
-        return [
-            'Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider',
-        ];
+        $app['config']->set(
+            'language.provider',
+            'Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider'
+        );
+
+        return [$app['config']->get('language.provider')];
     }
 }
