@@ -24,7 +24,8 @@
   "autoload": {
     "psr-4": {
       "Vluzrmos\\LanguageDetector\\": "src/"
-    }
+    },
+    "files": ["src/Support/helpers.php"]
   },
   "autoload-dev": {
     "psr-4": {

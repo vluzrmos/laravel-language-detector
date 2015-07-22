@@ -1,7 +1,5 @@
 <?php
 
-use Vluzrmos\LanguageDetector\Support\LangConfigString;
-
 return [
     /*
      * Indicates whenever should autodetect and apply the language of the request.
@@ -24,10 +22,10 @@ return [
     /*
      * Languages available on the application.
      *
-     * You could use LangConfigString to use the string syntax
+     * You could use parse_langs_to_array to use the string syntax
      * or just use the array of languages with its aliases.
      */
-    'languages' => (new LangConfigString())->toArray(
+    'languages' => parse_langs_to_array(
         env('LANG_DETECTOR_LANGUAGES', ['en'])
     ),
 ];

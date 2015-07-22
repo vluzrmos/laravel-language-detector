@@ -50,7 +50,7 @@ Put that on your `.env` file:
 ```bash
 #Indicates whenever should autodetect the language (it could be removed)
 LANG_DETECTOR_AUTODETECT=true
-#The driver to use, default is browser 
+#The driver to use, default is browser
 LANG_DETECTOR_DRIVER="browser"
 #The segment to use in uri or subdomain driver, default 0 (it could be removed)
 LANG_DETECTOR_SEGMENT=0
@@ -61,10 +61,10 @@ LANG_DETECTOR_LANGUAGES="en,fr,pt_BR"
 ```
 
 If you not want to use that, just publish the configurations of the package with
-`php artisan vendor:publish` and edit on `config/lang-detector.php` generated. 
+`php artisan vendor:publish` and edit on `config/lang-detector.php` generated.
 
 **For Lumen**, consider to copy `vendor/vluzrmos/language-detector/config/lang-detector.php`
-to your configs dir and use `$app->configure('lang-detector')` before register the 
+to your configs dir and use `$app->configure('lang-detector')` before register the
 `LanguageDetectorServiceProvider`.
 
 # Detector Drivers
