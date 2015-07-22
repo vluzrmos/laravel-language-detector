@@ -34,55 +34,38 @@ Vluzrmos\LanguageDetector\LanguageDetector\Providers\ServiceProvider::class
 ```
 > ::class notation is optional.
 
-Publish the config file:
-
-```
-php artisan vendor:publish
-```
-
 ## Lumen
 
 Edit the `bootratrap/app.php`:
 
-Lumen doesn't support vendor publish, then you have to create manually the configuration file or
-just copy the `config/lang-detector.php` to your `config/` path, then:
-
 ```php
-$app->configure('lang-detector');//be sure that is before register the package
-
 $app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class);
 ```
 > ::class notation is optional.
 
 # Configuration
-That is the default configuration file:
 
-```php
-return [
-    /*
-     * Indicates whenever should autodetect and apply the language of the request.
-     */
-    'autodetect' => true,
+Put that on your `.env` file:
 
-    /*
-     * Default driver to use to detect the request language.
-     *
-     * Available: browser, subdomain, uri.
-     */
-    'driver' => 'browser',
-
-    /*
-     * Used on subdomain and uri drivers. That indicates which segment should be used
-     * to verify the language.
-     */
-    'segment' => 0,
-
-    /*
-     * Languages available on the application.
-     */
-    'languages' => ['en'],
-];
+```bash
+#Indicates whenever should autodetect the language (it could be removed)
+LANG_DETECTOR_AUTODETECT=true
+#The driver to use, default is browser 
+LANG_DETECTOR_DRIVER="browser"
+#The segment to use in uri or subdomain driver, default 0 (it could be removed)
+LANG_DETECTOR_SEGMENT=0
+#A comma-separated list of available languages on application
+LANG_DETECTOR_LANGUAGES="en,fr,pt_BR"
+#To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
+# LANG_DETECTOR_LANGUAGES="en, en-us:en, pt-br:pt_BR"
 ```
+
+If you not want to use that, just publish the configurations of the package with
+`php artisan vendor:publish` and edit on `config/lang-detector.php` generated. 
+
+**For Lumen**, consider to copy `vendor/vluzrmos/language-detector/config/lang-detector.php`
+to your configs dir and use `$app->configure('lang-detector')` before register the 
+`LanguageDetectorServiceProvider`.
 
 # Detector Drivers
 
@@ -188,24 +171,14 @@ the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php
     'en', //will detect 'en' language
 ]
 ```
-# Using .env instead of config file
 
-You are allowed to use the `.env` file:
+or if you are using `.env` instead of config file:
 
-```bash
-#Indicates whenever should autodetect the language (it could be removed)
-LANG_DETECTOR_AUTODETECT=true
-#The driver to use, default is browser 
-LANG_DETECTOR_DRIVER="browser"
-#The segment to use in uri or subdomain driver, default 0 (it could be removed)
-LANG_DETECTOR_SEGMENT=0
-#A comma-separated list of available languages on application
-LANG_DETECTOR_LANGUAGES="en,fr,pt_BR"
-#To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
-LANG_DETECTOR_LANGUAGES="en, en-us:en, pt-br:pt_BR"
 ```
-
-> It is more convenient when you do not want to use the lang-detector config file.
+#Just put the languages in a comma-separated string.
+#To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
+LANG_DETECTOR_LANGUAGES="pt_BR:pt-BR, pt:pt-BR, pt-br:pt-BR, en"
+```
 
 # Suggestions
 

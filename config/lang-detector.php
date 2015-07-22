@@ -23,6 +23,9 @@ return [
 
     /*
      * Languages available on the application.
+     *
+     * You could use LangConfigString to use the string syntax
+     * or just use the array of languages with its aliases.
      */
     'languages' => (new LangConfigString())->toArray(
         env('LANG_DETECTOR_LANGUAGES', ['en'])
