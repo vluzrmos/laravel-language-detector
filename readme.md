@@ -188,6 +188,25 @@ the `subdomain` or `uri` drivers, just configure it on `config/lang-detector.php
     'en', //will detect 'en' language
 ]
 ```
+# Using .env instead of config file
+
+You are allowed to use the `.env` file:
+
+```bash
+#Indicates whenever should autodetect the language (it could be removed)
+LANG_DETECTOR_AUTODETECT=true
+#The driver to use, default is browser 
+LANG_DETECTOR_DRIVER=browser
+#The segment to use in uri or subdomain driver, default 0 (it could be removed)
+LANG_DETECTOR_SEGMENT=0
+#A comma-separated list of available languages on application
+LANG_DETECTOR_LANGUAGES=en,fr,pt_BR
+#To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
+LANG_DETECTOR_LANGUAGES=en, en-us:en, pt-br:pt_BR
+```
+
+> It is more convenient when you do not want to use the lang-detector config file.
+
 # Suggestions
 
 Consider to use that list of 46 default laravel messages translated:
