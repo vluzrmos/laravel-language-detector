@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('parse_langs_to_array')) {
+if (! function_exists('parse_langs_to_array')) {
     /**
      * Parse a simple string comma-separated to array.
      * @see split_srt_to_simple_array.
@@ -18,7 +18,7 @@ if (!function_exists('parse_langs_to_array')) {
     }
 }
 
-if (!function_exists('split_str_to_simple_array')) {
+if (! function_exists('split_str_to_simple_array')) {
     /**
      * Parse a simple string comma-separated to array. It also allow to use simple
      * indexes, like: "something:awesome, locale:pt-br, country:brazil".
