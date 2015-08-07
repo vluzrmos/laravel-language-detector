@@ -30,7 +30,7 @@ Edit your `config/app.php`:
 Please, put that provider before your own `App\Providers\RouteServiceProvider`:
 
 ```
-Vluzrmos\LanguageDetector\LanguageDetector\Providers\LanguageDetectorServiceProvider::class
+Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class
 ```
 > ::class notation is optional.
 
