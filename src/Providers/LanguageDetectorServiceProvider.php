@@ -199,12 +199,17 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             }
         );
     }
-
+    
+    /**
+     * get locales defined in resources/lang directory
+     * 
+     * @return array
+     */
     protected function getSupportedLocales()
     {
-        if (\Cache::has('language.available'))
+        if (\Cache::has('lang-detector.available'))
         {
-            return \Cache::get('language.available');
+            return \Cache::get('lang-detector.available');
         }
         
         $languages = \File::directories($this->app->langPath());
@@ -214,6 +219,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             $value = basename($value);
         });
 
-        return \Cache::forever('language.available',$languages);
+        return \Cache::forever('lang-detector.available',$languages);
     }
 }
