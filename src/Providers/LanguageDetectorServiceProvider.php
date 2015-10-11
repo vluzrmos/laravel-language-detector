@@ -109,6 +109,11 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $languages = $this->config('languages', []);
 
+        if(in_array('auto', $languages, true))
+        {
+            $languages = $this->getSupportedLocales();
+        }
+
         $segment = $this->config('segment', 0);
 
         foreach ($this->drivers as $short => $driver) {
@@ -193,5 +198,17 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 return $this->getLanguageDetector()->routePrefix();
             }
         );
+    }
+
+    protected function getSupportedLocales()
+    {
+        $languages = \File::directories($this->app->langPath());
+        
+        array_walk($languages, function(&$value, $key)
+        {
+            $value = basename($value);
+        });
+
+        return $languages;
     }
 }
