@@ -202,6 +202,11 @@ class LanguageDetectorServiceProvider extends ServiceProvider
 
     protected function getSupportedLocales()
     {
+        if (\Cache::has('language.available'))
+        {
+            return \Cache::get('language.available');
+        }
+        
         $languages = \File::directories($this->app->langPath());
         
         array_walk($languages, function(&$value, $key)
@@ -209,6 +214,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             $value = basename($value);
         });
 
-        return $languages;
+        return \Cache::forever('language.available',$languages);
     }
 }
