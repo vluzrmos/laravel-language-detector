@@ -2,7 +2,7 @@
 
 namespace Vluzrmos\LanguageDetector;
 
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Illuminate\Foundation\Application;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface as Driver;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
 use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPrefixRoute;
@@ -13,10 +13,10 @@ use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPre
 class LanguageDetector implements LanguageDetectorInterface
 {
     /**
-     * Translator instance.
-     * @var Translator
+     * Application.
+     * @var Application
      */
-    protected $translator;
+    protected $app;
 
     /**
      * Driver to detect and apply the language.
@@ -25,12 +25,11 @@ class LanguageDetector implements LanguageDetectorInterface
     protected $driver;
 
     /**
-     * @param Translator $translator
-     * @param Driver     $driver
+     * @param Driver $driver
      */
-    public function __construct(Translator $translator, Driver $driver = null)
+    public function __construct(Driver $driver = null)
     {
-        $this->translator = $translator;
+        $this->app = app();
         $this->driver = $driver;
     }
 
@@ -87,7 +86,7 @@ class LanguageDetector implements LanguageDetectorInterface
      */
     public function apply($locale)
     {
-        $this->translator->setLocale($locale);
+        $this->app->setLocale($locale);
     }
 
     /**
@@ -100,7 +99,7 @@ class LanguageDetector implements LanguageDetectorInterface
         $driver = $this->getDriver();
 
         if ($driver instanceof ShouldPrefixRoute) {
-            return $driver->routePrefix($this->translator->getLocale());
+            return $driver->routePrefix($this->app->getLocale());
         }
 
         return '';

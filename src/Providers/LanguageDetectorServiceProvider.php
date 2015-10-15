@@ -5,7 +5,6 @@ namespace Vluzrmos\LanguageDetector\Providers;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Vluzrmos\LanguageDetector\Drivers\AbstractDetector;
 use Vluzrmos\LanguageDetector\LanguageDetector;
 
@@ -14,12 +13,6 @@ use Vluzrmos\LanguageDetector\LanguageDetector;
  */
 class LanguageDetectorServiceProvider extends ServiceProvider
 {
-    /**
-     * Symfony translator.
-     * @var Translator
-     */
-    protected $translator;
-
     /**
      * Illuminate Request.
      * @var Request
@@ -49,7 +42,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->translator = $this->app['translator'];
         $this->config = $this->app['config'];
         $this->request = $this->app['request'];
 
@@ -151,7 +143,6 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             $contract,
             function () use ($driver) {
                 return new LanguageDetector(
-                    $this->translator,
                     $this->app['language.driver.'.$driver]
                 );
             }
