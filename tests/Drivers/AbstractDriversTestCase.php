@@ -33,9 +33,9 @@ abstract class AbstractDriversTestCase extends TestCase
 
         $this->translator = $this->app['translator'];
 
-        $this->detector = new LanguageDetector($this->translator);
+        $this->detector = new LanguageDetector();
 
-        $this->translator->setLocale('fr');
+        $this->app->setLocale('fr');
     }
 
     /**
