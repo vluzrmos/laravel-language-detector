@@ -2,6 +2,7 @@
 
 namespace Vluzrmos\LanguageDetector;
 
+use Closure;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface as Driver;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
@@ -23,6 +24,11 @@ class LanguageDetector implements LanguageDetectorInterface
      * @var Driver
      */
     protected $driver;
+
+    /**
+     * @var Closure
+     */
+    protected $applyLocaleCallback;
 
     /**
      * @param Translator $translator
@@ -88,6 +94,27 @@ class LanguageDetector implements LanguageDetectorInterface
     public function apply($locale)
     {
         $this->translator->setLocale($locale);
+
+        call_user_func($this->getApplyLocaleCallback(), $locale, $this);
+    }
+
+    /**
+     * Get the Closure to be called after locale was applied.
+     *
+     * @return Closure
+     */
+    public function getApplyLocaleCallback()
+    {
+        return is_callable($this->applyLocaleCallback) ? $this->applyLocaleCallback : function () {};
+    }
+
+    /**
+     * Set the Closure to be called after locale was applied.
+     * @param Closure $callback
+     */
+    public function setApplyLocaleCallback(Closure $callback)
+    {
+        $this->applyLocaleCallback = $callback;
     }
 
     /**

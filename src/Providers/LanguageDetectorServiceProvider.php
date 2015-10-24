@@ -150,10 +150,18 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         $this->app->singleton(
             $contract,
             function () use ($driver) {
-                return new LanguageDetector(
+                $detector = new LanguageDetector(
                     $this->translator,
                     $this->app['language.driver.'.$driver]
                 );
+
+                if (method_exists($this->app, 'setLocale')) {
+                    $detector->setApplyLocaleCallback(function ($locale, $driver) {
+                        $this->app->setLocale($locale);
+                    });
+                }
+
+                return $detector;
             }
         );
 
