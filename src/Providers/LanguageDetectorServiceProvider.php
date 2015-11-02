@@ -218,7 +218,9 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         {
             $value = basename($value);
         });
+        
+        \Cache::forever('lang-detector.available',$languages);
 
-        return \Cache::forever('lang-detector.available',$languages);
+        return $languages;
     }
 }
