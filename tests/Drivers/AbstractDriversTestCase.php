@@ -47,7 +47,7 @@ abstract class AbstractDriversTestCase extends TestCase
      *
      * @return \Illuminate\Http\Request
      */
-    public function createRequest($uri = 'http://localhost:8000', $method = 'GET', $acceptedLanguages = "en-us,en;q=0.8")
+    public function createRequest($uri = 'http://localhost:8000', $method = 'GET', $acceptedLanguages = 'en-us,en;q=0.8')
     {
         $request = Request::create($uri, $method);
 

@@ -54,7 +54,7 @@ class BrowserDetectorDriverTest extends AbstractDriversTestCase
     }
 
     /**
-     * Assert detection with content negotiation
+     * Assert detection with content negotiation.
      */
     public function testDetectWithMultiSubLocalesAndContentNegotiation()
     {
