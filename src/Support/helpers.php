@@ -11,10 +11,22 @@ if (! function_exists('parse_langs_to_array')) {
     function parse_langs_to_array($str)
     {
         if (is_array($str)) {
-            return $str;
+            $languages = $str;
+        } else {
+            $languages = split_str_to_simple_array($str);
         }
 
-        return split_str_to_simple_array($str);
+        foreach ($languages as $alias => $lang) {
+            if (is_numeric($alias) && str_contains($lang, '-')) {
+                $newAlias = preg_replace('/-/', '_', $lang);
+
+                if (! isset($languages[$newAlias])) {
+                    $languages[$newAlias] = $lang;
+                }
+            }
+        }
+
+        return $languages;
     }
 }
 
