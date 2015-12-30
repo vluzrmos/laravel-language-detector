@@ -28,4 +28,14 @@ return [
     'languages' => parse_langs_to_array(
         env('LANG_DETECTOR_LANGUAGES', ['en'])
     ),
+
+    /*
+     * Indicates if should store detected locale on cookies
+     */
+    'cookie' => ! ! env('LANG_DETECTOR_COOKIE', true),
+
+    /*
+     * Cookie name
+     */
+    'cookie_name' => env('LANG_DETECTOR_COOKIE', 'locale'),
 ];

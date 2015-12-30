@@ -145,15 +145,21 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $contract = 'Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface';
 
+        $cookie = $this->config('cookie', true) ? $this->config('cookie_name', 'locale') : null;
+
         $driver = $this->config('driver', 'browser');
 
         $this->app->singleton(
             $contract,
-            function () use ($driver) {
+            function () use ($driver, $cookie) {
                 $detector = new LanguageDetector(
                     $this->translator,
                     $this->app['language.driver.'.$driver]
                 );
+
+                if ($cookie) {
+                    $detector->useCookies($cookie);
+                }
 
                 if (method_exists($this->app, 'setLocale')) {
                     $detector->addCallback(function ($locale) {

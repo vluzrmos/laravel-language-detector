@@ -31,6 +31,12 @@ class LanguageDetector implements LanguageDetectorInterface
     protected $callbacks = [];
 
     /**
+     * Indicates cookie name or false to do not use cookies.
+     * @var string|false|null
+     */
+    protected $cookie;
+
+    /**
      * @param Translator $translator
      * @param Driver     $driver
      */
@@ -63,7 +69,30 @@ class LanguageDetector implements LanguageDetectorInterface
      */
     public function detect()
     {
-        return $this->getDriver()->detect();
+        return $this->getLanguageFromCookie() ?: $this->getDriver()->detect();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguageFromCookie()
+    {
+        if ($this->cookie) {
+            /** @var \Illuminate\Http\Request $request */
+            $request = $this->getDriver()->getRequest();
+
+            return $request->cookie($this->cookie);
+        }
+
+        return;
+    }
+
+    /**
+     * @param string|bool|null $cookieName
+     */
+    public function useCookies($cookieName = 'locale')
+    {
+        $this->cookie = empty($cookieName) ? false : $cookieName;
     }
 
     /**
