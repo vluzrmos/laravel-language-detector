@@ -50,12 +50,19 @@ Put that on your `.env` file:
 ```bash
 #Indicates whenever should autodetect the language (it could be removed)
 LANG_DETECTOR_AUTODETECT=true
+
 #The driver to use, default is browser
 LANG_DETECTOR_DRIVER="browser"
+
 #The segment to use in uri or subdomain driver, default 0 (it could be removed)
 LANG_DETECTOR_SEGMENT=0
+
+#The name of the cookie to cache detected language or false|null to disable that feature
+LANG_DETECTOR_COOKIE=locale
+
 #A comma-separated list of available languages on application
 LANG_DETECTOR_LANGUAGES="en,fr,pt_BR"
+
 #To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
 # LANG_DETECTOR_LANGUAGES="en, en-us:en, pt-br:pt_BR"
 ```

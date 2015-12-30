@@ -35,6 +35,11 @@ return [
     'cookie' => (bool) env('LANG_DETECTOR_COOKIE', true),
 
     /*
+     * Indicates if should encrypt cookie
+     */
+    'cookie_encrypt' => (bool) env('LANG_DETECTOR_COOKIE_ENCRYPT', false),
+
+    /*
      * Cookie name
      */
     'cookie_name' => env('LANG_DETECTOR_COOKIE', 'locale'),
