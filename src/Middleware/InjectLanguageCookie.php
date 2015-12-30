@@ -20,9 +20,11 @@ class InjectLanguageCookie
         /** @var \Illuminate\Http\Response $response */
         $response = $next($request);
 
-        return $response->withCookie(
+         $cookie = cookie()->forever(
             config('lang-detector.cookie_name', 'locale'),
             app('translator')->getLocale()
         );
+
+        return $response->withCookie($cookie);
     }
 }
