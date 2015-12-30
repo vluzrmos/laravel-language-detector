@@ -43,10 +43,16 @@ abstract class AbstractDriversTestCase extends TestCase
      *
      * @param string $uri
      * @param string $method
-     * @return Request
+     * @param string  $acceptedLanguages
+     *
+     * @return \Illuminate\Http\Request
      */
-    public function createRequest($uri = 'http://localhost:8000', $method = 'GET')
+    public function createRequest($uri = 'http://localhost:8000', $method = 'GET', $acceptedLanguages = "en-us,en;q=0.8")
     {
-        return Request::create($uri, $method);
+        $request = Request::create($uri, $method);
+
+        $request->headers->set('accept_language', $acceptedLanguages);
+
+        return $request;
     }
 }
