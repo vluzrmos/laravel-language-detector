@@ -84,7 +84,7 @@ class LanguageDetector implements LanguageDetectorInterface
             return $request->cookie($this->cookie);
         }
 
-        return;
+        return false;
     }
 
     /**
