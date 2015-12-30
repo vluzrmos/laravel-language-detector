@@ -54,13 +54,9 @@ class LanguageDetectorServiceProvider extends ServiceProvider
         $this->request = $this->app['request'];
 
         $this->registerAndPublishConfigurations();
-
         $this->registerAllDrivers();
-
         $this->registerLanguageDetector();
-
         $this->detectAndApplyLanguage();
-
         $this->registerRoutePrefix();
     }
 
@@ -69,11 +65,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->resolving('Illuminate\Cookie\Middleware\EncryptCookies', function ($middleware) {
-            if ($this->config('cookie', true) && ! $this->config('cookie_encrypt', false)) {
-                $middleware->disableFor($this->config('lang-detector.cookie_name', 'locale'));
-            }
-        });
+        $this->registerEncryptCookies();
     }
 
     /**
@@ -89,6 +81,18 @@ class LanguageDetectorServiceProvider extends ServiceProvider
             'language.driver.subdomain',
             'language.driver.uri',
         ];
+    }
+
+    /**
+     * Disable cookie encryption for language cookie name.
+     */
+    protected function registerEncryptCookies()
+    {
+        $this->app->resolving('Illuminate\Cookie\Middleware\EncryptCookies', function ($middleware) {
+            if ($this->config('cookie', true) && ! $this->config('cookie_encrypt', false)) {
+                $middleware->disableFor($this->config('lang-detector.cookie_name', 'locale'));
+            }
+        });
     }
 
     /**
@@ -113,6 +117,12 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     protected function registerAllDrivers()
     {
         $languages = $this->config('languages', []);
+
+        if (empty($languages) || in_array('auto', $languages)) {
+            $languages = $this->getSupportedLanguages();
+
+            $this->app['config']->set('lang-detector.languages', $languages);
+        }
 
         $segment = $this->config('segment', 0);
 
@@ -212,5 +222,29 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 return $this->getLanguageDetector()->routePrefix();
             }
         );
+    }
+
+    /**
+     * Get a list of supported locales.
+     */
+    protected function getSupportedLanguages()
+    {
+        /** @var \Illuminate\Cache\Repository $cache */
+        $cache = $this->app['cache'];
+
+        return $cache->rememberForever('lang-detector.supported-languages', function () {
+            $iterator = \Symfony\Component\Finder\Finder::create()
+                ->directories()
+                ->in($this->app->langPath())
+                ->depth(0);
+
+            $langs = [];
+
+            foreach ($iterator as $dir) {
+                $langs[] = $dir->getBasename();
+            }
+
+            return parse_langs_to_array($langs);
+        });
     }
 }

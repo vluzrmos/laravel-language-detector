@@ -16,12 +16,17 @@ if (! function_exists('parse_langs_to_array')) {
             $languages = split_str_to_simple_array($str);
         }
 
-        foreach ($languages as $alias => $lang) {
-            if (is_numeric($alias) && str_contains($lang, '-')) {
-                $newAlias = preg_replace('/-/', '_', $lang);
+        /*
+         * replaces lang-locale to lang-LOCALE syntax
+         */
+        foreach ($languages as $alias => $langLocale) {
+            if (is_numeric($alias) && preg_match('/(-|_)/', $langLocale)) {
+                list($lang, $locale) = preg_split('/(-|_)/', $langLocale);
+
+                $newAlias = strtolower($lang).'_'.strtoupper($locale);
 
                 if (! isset($languages[$newAlias])) {
-                    $languages[$newAlias] = $lang;
+                    $languages[$newAlias] = $langLocale;
                 }
             }
         }
