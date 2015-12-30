@@ -26,9 +26,9 @@ class LanguageDetector implements LanguageDetectorInterface
     protected $driver;
 
     /**
-     * @var Closure
+     * @var array
      */
-    protected $applyLocaleCallback;
+    protected $callbacks = [];
 
     /**
      * @param Translator $translator
@@ -95,26 +95,27 @@ class LanguageDetector implements LanguageDetectorInterface
     {
         $this->translator->setLocale($locale);
 
-        call_user_func($this->getApplyLocaleCallback(), $locale, $this);
+        $this->applyCallbacks($locale);
     }
 
     /**
-     * Get the Closure to be called after locale was applied.
-     *
-     * @return Closure
-     */
-    public function getApplyLocaleCallback()
-    {
-        return is_callable($this->applyLocaleCallback) ? $this->applyLocaleCallback : function () {};
-    }
-
-    /**
-     * Set the Closure to be called after locale was applied.
+     * Add a callback to call after applying the detected locale.
      * @param Closure $callback
      */
-    public function setApplyLocaleCallback(Closure $callback)
+    public function addCallback(Closure $callback){
+        $this->callbacks[] = $callback;
+    }
+
+    /**
+     * Call all registered callbacks.
+     *
+     * @param $language
+     */
+    protected function applyCallbacks($language)
     {
-        $this->applyLocaleCallback = $callback;
+        foreach($this->callbacks as $callback) {
+            call_user_func($callback, $language, $this);
+        }
     }
 
     /**

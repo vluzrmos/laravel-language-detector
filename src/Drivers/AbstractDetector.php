@@ -96,7 +96,7 @@ abstract class AbstractDetector implements DetectorDriverInterface
      */
     public function setDefaultSegment($segment = 0)
     {
-        $this->segment = $segment;
+        $this->segment = (int) $segment;
     }
 
     /**

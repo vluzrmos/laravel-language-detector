@@ -156,7 +156,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
                 );
 
                 if (method_exists($this->app, 'setLocale')) {
-                    $detector->setApplyLocaleCallback(function ($locale, $driver) {
+                    $detector->addCallback(function ($locale) {
                         $this->app->setLocale($locale);
                     });
                 }
