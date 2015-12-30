@@ -88,6 +88,19 @@ class LanguageDetector implements LanguageDetectorInterface
     }
 
     /**
+     * @param $locale
+     */
+    public function addCookieToQueue($locale)
+    {
+        if ($this->cookie) {
+            /** @var \Illuminate\Cookie\CookieJar $cookieJar */
+            $cookieJar = cookie();
+
+            $cookieJar->queue($cookieJar->forever($this->cookie, $locale));
+        }
+    }
+
+    /**
      * @param string|bool|null $cookieName
      */
     public function useCookies($cookieName = 'locale')
@@ -123,6 +136,8 @@ class LanguageDetector implements LanguageDetectorInterface
     public function apply($locale)
     {
         $this->translator->setLocale($locale);
+
+        $this->addCookieToQueue($locale);
 
         $this->applyCallbacks($locale);
     }
