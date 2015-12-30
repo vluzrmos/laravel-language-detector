@@ -4,7 +4,7 @@ if (! function_exists('parse_langs_to_array')) {
     /**
      * Parse a simple string comma-separated to array.
      * @see split_srt_to_simple_array.
-     * @param string $str
+     * @param string|array $str
      *
      * @return array
      */
