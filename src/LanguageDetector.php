@@ -88,7 +88,9 @@ class LanguageDetector implements LanguageDetectorInterface
     }
 
     /**
-     * @param $locale
+     * Add cookie with locale to queue.
+     *
+     * @param string $locale
      */
     public function addCookieToQueue($locale)
     {
@@ -101,6 +103,9 @@ class LanguageDetector implements LanguageDetectorInterface
     }
 
     /**
+     * Determine if should use cookies.
+     * false or null will disable feature, string will set cookie name.
+     *
      * @param string|bool|null $cookieName
      */
     public function useCookies($cookieName = 'locale')
@@ -154,7 +159,7 @@ class LanguageDetector implements LanguageDetectorInterface
     /**
      * Call all registered callbacks.
      *
-     * @param $language
+     * @param string $language
      */
     protected function applyCallbacks($language)
     {
