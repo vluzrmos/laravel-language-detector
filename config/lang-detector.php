@@ -32,7 +32,7 @@ return [
     /*
      * Indicates if should store detected locale on cookies
      */
-    'cookie' => ! ! env('LANG_DETECTOR_COOKIE', true),
+    'cookie' => (bool) env('LANG_DETECTOR_COOKIE', true),
 
     /*
      * Cookie name
