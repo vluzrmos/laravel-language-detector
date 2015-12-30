@@ -102,7 +102,8 @@ class LanguageDetector implements LanguageDetectorInterface
      * Add a callback to call after applying the detected locale.
      * @param Closure $callback
      */
-    public function addCallback(Closure $callback){
+    public function addCallback(Closure $callback)
+    {
         $this->callbacks[] = $callback;
     }
 
@@ -113,7 +114,7 @@ class LanguageDetector implements LanguageDetectorInterface
      */
     protected function applyCallbacks($language)
     {
-        foreach($this->callbacks as $callback) {
+        foreach ($this->callbacks as $callback) {
             call_user_func($callback, $language, $this);
         }
     }

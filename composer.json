@@ -16,7 +16,7 @@
     "illuminate/support": "~5.0"
   },
   "require-dev": {
-    "fabpot/php-cs-fixer": "~2.0",
+    "fabpot/php-cs-fixer": "~1.11",
     "mockery/mockery": "0.9.*",
     "orchestra/testbench": "~3.0",
     "phpunit/phpunit": "~4.0"
