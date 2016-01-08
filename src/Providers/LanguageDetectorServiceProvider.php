@@ -90,7 +90,7 @@ class LanguageDetectorServiceProvider extends ServiceProvider
     {
         $this->app->resolving('Illuminate\Cookie\Middleware\EncryptCookies', function ($middleware) {
             if ($this->config('cookie', true) && ! $this->config('cookie_encrypt', false)) {
-                $middleware->disableFor($this->config('lang-detector.cookie_name', 'locale'));
+                $middleware->disableFor($this->config('cookie_name', 'locale'));
             }
         });
     }
