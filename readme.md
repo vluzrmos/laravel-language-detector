@@ -17,26 +17,27 @@ using [browser preferences](#browser-preferences), [subdomains](#subdomains) or 
 
 # Installation
 
-Require the package with composer:
+Require the package using composer:
 
 `composer require vluzrmos/language-detector`
 
-Add the service provider to your providers list:
+Add the service provider as follows:
 
 ## Laravel
 
 Edit your `config/app.php`:
 
-Please, put that provider before your own `App\Providers\RouteServiceProvider`:
+Insert this line of code **above** the listed RouteServiceProvider, ex:
 
 ```
-Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class
+Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class,
+App\Providers\RouteServiceProvider::class, 
 ```
 > ::class notation is optional.
 
 ## Lumen
 
-Edit the `bootratrap/app.php`:
+Edit the `bootstrap/app.php`:
 
 ```php
 $app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class);
@@ -45,25 +46,29 @@ $app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvid
 
 # Configuration
 
-Put that on your `.env` file:
+Two options for Laravel, either publish the package conﬁguration using: 
+
+    php artisan vendor:publish
+
+then edit the new `conﬁg/lang-detector.php` ﬁle or add the following lines to your .env ﬁle: 
 
 ```bash
-#Indicates whenever should autodetect the language (it could be removed)
+#Indicates whether the language should be autodetected (can be removed)
 LANG_DETECTOR_AUTODETECT=true
 
-#The driver to use, default is browser
+#Driver to use, the default is browser 
 LANG_DETECTOR_DRIVER="browser"
 
-#The segment to use in uri or subdomain driver, default 0 (it could be removed)
+#Segment to use in the uri or subdomain driver, default 0 (can be removed) 
 LANG_DETECTOR_SEGMENT=0
 
-#The name of the cookie to cache detected language or false|null to disable that feature
+#Name of cookie to cache the detected language (use false|null to disable) 
 LANG_DETECTOR_COOKIE=locale
 
-#A comma-separated list of available languages on application
+#Comma-separated list of languages provided on the app 
 LANG_DETECTOR_LANGUAGES="en,fr,pt_BR"
 
-#To aliase the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
+#To alias the language use the notation ":", "=", ":=" or  "=>" to separate the alias and its value.
 # LANG_DETECTOR_LANGUAGES="en, en-us:en, pt-br:pt_BR"
 ```
 
@@ -87,9 +92,9 @@ eg.:
 
     http://fr.site.domain
 
-The `subdomain` driver will detect `fr` language and set to the application if that is in available languages on `lang-detector` config file.
+The `subdomain` driver will detect language `fr` and set the application to `fr`  if it is one of the  available languages in the `lang-detector` conﬁg ﬁle.
 
-> Note: subdomain and uri drivers needs you [aliases](#aliasing-language-locales) the language-locales on lang-detector config file.
+> Note: subdomain and uri drivers require [aliases](#aliasing-language-locales) of the the language-locales in the lang-detector conﬁg ﬁle.
 
 ## Route Prefixes
 The driver `uri` will try to detect the language based on the route prefix:
@@ -189,11 +194,11 @@ LANG_DETECTOR_LANGUAGES="pt_BR:pt-BR, pt:pt-BR, pt-br:pt-BR, en"
 
 # Suggestions
 
-Consider to use that list of 46 default laravel messages translated:
+The default Laravel language lines are available translated into 51 languages here:
 
 - [caouecs/laravel-lang](https://github.com/caouecs/Laravel-lang)
 
-If you want to translate your models you should use that package:
+If you want to translate your models you can use this package: 
 
 - [dimsav/laravel-translatable](https://github.com/dimsav/laravel-translatable)
 
