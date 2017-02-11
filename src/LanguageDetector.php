@@ -3,7 +3,8 @@
 namespace Vluzrmos\LanguageDetector;
 
 use Closure;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Illuminate\Contracts\Translation\Translator as IlluminateTranslator;
+use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslator;
 use Vluzrmos\LanguageDetector\Contracts\DetectorDriverInterface as Driver;
 use Vluzrmos\LanguageDetector\Contracts\LanguageDetectorInterface;
 use Vluzrmos\LanguageDetector\Contracts\ShouldPrefixRoutesInterface as ShouldPrefixRoute;
@@ -15,7 +16,7 @@ class LanguageDetector implements LanguageDetectorInterface
 {
     /**
      * Translator instance.
-     * @var Translator
+     * @var SymfonyTranslator|IlluminateTranslator
      */
     protected $translator;
 
@@ -37,11 +38,15 @@ class LanguageDetector implements LanguageDetectorInterface
     protected $cookie;
 
     /**
-     * @param Translator $translator
+     * @param SymfonyTranslator|IlluminateTranslator $translator
      * @param Driver     $driver
      */
-    public function __construct(Translator $translator, Driver $driver = null)
+    public function __construct($translator, Driver $driver = null)
     {
+        if (!$translator instanceof SymfonyTranslator && !$translator instanceof IlluminateTranslator) {
+            throw new \InvalidArgumentException("Translator must implement the 'Symfony\\Component\\Translation\\TranslatorInterface' or 'Illuminate\\Contracts\\Translation\\Translator' interface.");
+        }
+
         $this->translator = $translator;
         $this->driver = $driver;
     }
