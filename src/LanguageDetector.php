@@ -147,7 +147,9 @@ class LanguageDetector implements LanguageDetectorInterface
     {
         $this->translator->setLocale($locale);
 
-        $this->addCookieToQueue($locale);
+        if (!$this->getLanguageFromCookie()) {
+            $this->addCookieToQueue($locale);
+        }
 
         $this->applyCallbacks($locale);
     }
