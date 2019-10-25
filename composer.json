@@ -11,10 +11,7 @@
   ],
   "type": "package",
   "require": {
-    "illuminate/config": "~5.0",
-    "illuminate/translation": "~5.0",
-    "illuminate/support": "~5.0",
-    "illuminate/cookie": "~5.0"
+    "laravel/framework": ">=5.3|>=6.0"
   },
   "require-dev": {
     "fabpot/php-cs-fixer": "~1.11",
