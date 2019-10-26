@@ -2,4 +2,5 @@
 vendor/
 composer.lock
 .php_cs.cache
+.phpunit.result.cache
 tmp[a-zA-Z0-9]{6,99}
