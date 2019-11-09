@@ -11,16 +11,15 @@
   ],
   "type": "package",
   "require": {
-    "illuminate/config": "~5.0",
-    "illuminate/translation": "~5.0",
-    "illuminate/support": "~5.0",
-    "illuminate/cookie": "~5.0"
+    "illuminate/config": "~5.0 || ~6.0",
+    "illuminate/translation": "~5.0 || ~6.0",
+    "illuminate/support": "~5.0 || ~6.0",
+    "illuminate/cookie": "~5.0 || ~6.0"
   },
   "require-dev": {
-    "fabpot/php-cs-fixer": "~1.11",
-    "mockery/mockery": "0.9.*",
-    "orchestra/testbench": "3.0.*",
-    "phpunit/phpunit": "~4.0"
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "orchestra/testbench": "^4.0",
+    "phpunit/phpunit": "^8.4"
   },
   "autoload": {
     "psr-4": {

@@ -27,7 +27,7 @@ abstract class AbstractDriversTestCase extends TestCase
     /**
      * Set up the tests.
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
