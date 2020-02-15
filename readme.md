@@ -48,7 +48,7 @@ $app->register(Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvid
 
 Two options for Laravel, either publish the package conﬁguration using: 
 
-    php artisan vendor:publish
+    php artisan vendor:publish --provider="Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider"
 
 then edit the new `conﬁg/lang-detector.php` ﬁle or add the following lines to your .env ﬁle: 
 
