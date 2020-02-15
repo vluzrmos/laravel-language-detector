@@ -1,7 +1,13 @@
 {
   "name": "vluzrmos/language-detector",
   "description": "Detect the language for your application using browser preferences, subdomains or route prefixes.",
-  "keywords": ["Laravel", "Lumen", "Locale", "Language", "i18n"],
+  "keywords": [
+    "Laravel",
+    "Lumen",
+    "Locale",
+    "Language",
+    "i18n"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -11,13 +17,14 @@
   ],
   "type": "package",
   "require": {
-    "illuminate/config": "~5.0 || ~6.0",
-    "illuminate/translation": "~5.0 || ~6.0",
-    "illuminate/support": "~5.0 || ~6.0",
-    "illuminate/cookie": "~5.0 || ~6.0"
+    "php": "^7.2",
+    "illuminate/config": "~6.0",
+    "illuminate/translation": "~6.0",
+    "illuminate/support": "~6.0",
+    "illuminate/cookie": "~6.0"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.15",
+    "friendsofphp/php-cs-fixer": "^2.16",
     "orchestra/testbench": "^4.0",
     "phpunit/phpunit": "^8.4"
   },
@@ -25,14 +32,16 @@
     "psr-4": {
       "Vluzrmos\\LanguageDetector\\": "src/"
     },
-    "files": ["src/Support/helpers.php"]
+    "files": [
+      "src/Support/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
       "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
     }
   },
-  "config":{
+  "config": {
     "preferred-install": "dist"
   },
   "minimum-stability": "dev",
