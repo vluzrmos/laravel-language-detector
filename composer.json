@@ -41,6 +41,13 @@
       "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Vluzrmos\\LanguageDetector\\Providers\\LanguageDetectorServiceProvider,"
+      ]
+    }
+  },
   "config": {
     "preferred-install": "dist"
   },
