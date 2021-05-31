@@ -44,7 +44,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Vluzrmos\\LanguageDetector\\Providers\\LanguageDetectorServiceProvider,"
+        "Vluzrmos\\LanguageDetector\\Providers\\LanguageDetectorServiceProvider"
       ]
     }
   },

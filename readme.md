@@ -25,6 +25,8 @@ Add the service provider as follows:
 
 ## Laravel
 
+This is not needed for Laravel 5.5 and upper version.
+
 Edit your `config/app.php`:
 
 Insert this line of code **above** the listed RouteServiceProvider, ex:
