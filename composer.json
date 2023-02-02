@@ -1,56 +1,56 @@
 {
-  "name": "vluzrmos/language-detector",
-  "description": "Detect the language for your application using browser preferences, subdomains or route prefixes.",
-  "keywords": [
-    "Laravel",
-    "Lumen",
-    "Locale",
-    "Language",
-    "i18n"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Vagner do Carmo",
-      "email": "vluzrmos@gmail.com"
-    }
-  ],
-  "type": "package",
-  "require": {
-    "php": "^7.2 || ^8.0",
-    "illuminate/config": "~6.0 || ~7.0 || ~8.0 || ~9.0",
-    "illuminate/translation": "~6.0 || ~7.0 || ~8.0 || ~9.0",
-    "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0",
-    "illuminate/cookie": "~6.0 || ~7.0 || ~8.0 || ~9.0"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.16",
-    "orchestra/testbench": "^5.0 || ^6.0 || ^7.0",
-    "phpunit/phpunit": "^8.5 || ^9.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Vluzrmos\\LanguageDetector\\": "src/"
+    "name": "vluzrmos/language-detector",
+    "description": "Detect the language for your application using browser preferences, subdomains or route prefixes.",
+    "keywords": [
+        "Laravel",
+        "Lumen",
+        "Locale",
+        "Language",
+        "i18n"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vagner do Carmo",
+            "email": "vluzrmos@gmail.com"
+        }
+    ],
+    "type": "package",
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "illuminate/config": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0",
+        "illuminate/translation": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0",
+        "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0",
+        "illuminate/cookie": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0"
     },
-    "files": [
-      "src/Support/helpers.php"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Vluzrmos\\LanguageDetector\\Providers\\LanguageDetectorServiceProvider"
-      ]
-    }
-  },
-  "config": {
-    "preferred-install": "dist"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16|^3.14",
+        "orchestra/testbench": "^5.0 || ^6.0 || ^7.0|^8.0",
+        "phpunit/phpunit": "^8.5 || ^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vluzrmos\\LanguageDetector\\": "src/"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vluzrmos\\LanguageDetector\\Providers\\LanguageDetectorServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
