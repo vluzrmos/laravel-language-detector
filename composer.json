@@ -18,12 +18,12 @@
     "type": "package",
     "require": {
         "php": "^7.2 || ^8.0",
-        "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0 || ~10.0 || ^11.0 || ^12.0"
+        "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0 || ~10.0 || ^11.0 || ^12.0 || ^13.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16 || ^3.51",
-        "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
-        "phpunit/phpunit": "^8.5 || ^9.0 || ^10.5 || ^11.5.3"
+        "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+        "phpunit/phpunit": "^8.5 || ^9.0 || ^10.5 || ^11.5.3 || ^12.5.12"
     },
     "autoload": {
         "psr-4": {
